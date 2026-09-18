@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
+<!-- TABLEAU HG V3 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tableau de bord HG — V2</title>
@@ -13,6 +14,26 @@ header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 9
 @media(max-width:950px){.layout{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow:auto;padding:10px}.side-title{display:none}.side{display:flex}.side button{width:auto;white-space:nowrap}.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}}
 @media(max-width:600px){header{flex-wrap:wrap}.nav{order:3;flex-basis:100%}main{padding:30px 15px 70px}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.hero h1{font-size:43px}.page-title h1{font-size:38px}}
 </style>
+
+<style id="v3-css">
+.v3-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:var(--primary,#2563eb);color:#fff;font-size:.72rem;font-weight:700}
+.v3-admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.v3-card{background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:16px}
+.v3-card h3{margin:0 0 8px}.v3-card p{color:var(--muted,#64748b)}
+.v3-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.v3-input,.v3-select,.v3-textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--border,#d1d5db);border-radius:10px;background:var(--bg,#fff);color:inherit}
+.v3-textarea{min-height:110px;resize:vertical}
+.v3-btn{border:0;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:600}
+.v3-btn.primary{background:var(--primary,#2563eb);color:#fff}.v3-btn.secondary{background:#eef2f7;color:inherit}.v3-btn.danger{background:#fee2e2;color:#991b1b}
+.v3-table{width:100%;border-collapse:collapse}.v3-table th,.v3-table td{padding:9px;border-bottom:1px solid var(--border,#e5e7eb);text-align:left;vertical-align:top}
+.v3-preview{padding:18px;border-radius:14px;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(16,185,129,.08));min-height:90px}
+.v3-color{height:42px;width:70px;padding:3px}.v3-hidden{display:none!important}
+.v3-lock{max-width:420px;margin:auto}
+.v3-kpi{font-size:1.6rem;font-weight:800}
+.v3-small{font-size:.85rem;color:var(--muted,#64748b)}
+@media(max-width:700px){.v3-table{font-size:.9rem}.v3-table th:nth-child(4),.v3-table td:nth-child(4){display:none}}
+</style>
+
 </head>
 <body>
 <header>
@@ -134,5 +155,190 @@ async function importDataFile(e){try{data=JSON.parse(await e.target.files[0].tex
 function resetData(){if(confirm("Réinitialiser toutes les données ?")){data=JSON.parse(JSON.stringify(DEFAULT));save();renderHome();renderSubjects()}}
 renderHome();renderSubjects();show(location.hash.slice(1)||"accueil");
 </script>
+
+<!-- V3 ADMIN OVERLAY -->
+<div id="v3-admin-panel" class="v3-hidden">
+  <div class="v3-card">
+    <div class="v3-row" style="justify-content:space-between">
+      <div><span class="v3-badge">V3</span> <strong>Administration avancée</strong></div>
+      <button class="v3-btn secondary" onclick="v3CloseAdmin()">Fermer</button>
+    </div>
+    <div id="v3-admin-body" style="margin-top:16px"></div>
+  </div>
+</div>
+
+
+<script id="v3-js">
+(() => {
+  const KEY='tableauHG_v3_settings';
+  const DATA='tableauHG_v3_data';
+  const defaults={
+    siteTitle:'Tableau de bord HG',
+    subtitle:'Histoire • Géographie • EMC',
+    teacher:'Morgan Loton',
+    school:'',
+    primary:'#2563eb',
+    studentMode:false,
+    adminPassword:'',
+    homeTitle:'Tableau de bord HG',
+    homeText:'Un espace simple, clair et pratique pour préparer et conduire les séances.',
+  };
+  const defaultData={courses:[],resources:[],announcements:[]};
+
+  const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+  let S=Object.assign({},defaults,load(KEY,{}));
+  let D=Object.assign({},defaultData,load(DATA,{}));
+  const save=()=>{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem(DATA,JSON.stringify(D));};
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  window.v3OpenAdmin=()=>{ 
+    const panel=document.getElementById('v3-admin-panel');
+    panel.classList.remove('v3-hidden'); v3Render();
+  };
+  window.v3CloseAdmin=()=>document.getElementById('v3-admin-panel').classList.add('v3-hidden');
+
+  function v3Render(){
+    const b=document.getElementById('v3-admin-body');
+    b.innerHTML=`
+      <div class="v3-admin-grid">
+        <section class="v3-card">
+          <h3>Identité du site</h3>
+          <label>Nom du site<input class="v3-input" id="v3-title" value="${esc(S.siteTitle)}"></label><br>
+          <label>Sous-titre<input class="v3-input" id="v3-sub" value="${esc(S.subtitle)}"></label><br>
+          <label>Enseignant<input class="v3-input" id="v3-teacher" value="${esc(S.teacher)}"></label><br>
+          <label>Établissement<input class="v3-input" id="v3-school" value="${esc(S.school)}"></label><br>
+          <label>Couleur principale <input class="v3-color" type="color" id="v3-color" value="${esc(S.primary)}"></label>
+          <div class="v3-row" style="margin-top:12px"><button class="v3-btn primary" onclick="v3SaveIdentity()">Enregistrer</button></div>
+        </section>
+        <section class="v3-card">
+          <h3>Accueil</h3>
+          <label>Titre<input class="v3-input" id="v3-home-title" value="${esc(S.homeTitle)}"></label><br>
+          <label>Texte d'accueil<textarea class="v3-textarea" id="v3-home-text">${esc(S.homeText)}</textarea></label>
+          <button class="v3-btn primary" onclick="v3SaveHome()">Enregistrer</button>
+        </section>
+        <section class="v3-card">
+          <h3>Mode élève</h3>
+          <p>Masque les commandes d'administration sur l'appareil utilisé en classe.</p>
+          <label><input type="checkbox" id="v3-student" ${S.studentMode?'checked':''}> Activer le mode élève</label>
+          <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3SaveStudent()">Appliquer</button></div>
+        </section>
+        <section class="v3-card">
+          <h3>Mot de passe local</h3>
+          <p class="v3-small">Protection de l'interface d'administration sur cet appareil. Ce n'est pas une sécurité serveur.</p>
+          <input class="v3-input" type="password" id="v3-pass" placeholder="Laisser vide pour désactiver">
+          <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3SavePassword()">Enregistrer</button></div>
+        </section>
+      </div>
+
+      <div class="v3-card" style="margin-top:14px">
+        <h3>Cours</h3>
+        <div class="v3-admin-grid">
+          <input class="v3-input" id="c-title" placeholder="Titre du cours">
+          <select class="v3-select" id="c-subject"><option>Histoire</option><option>Géographie</option><option>EMC</option></select>
+          <select class="v3-select" id="c-level"><option>6e</option><option>5e</option><option>4e</option><option>3e</option></select>
+          <input class="v3-input" id="c-url" placeholder="Lien (optionnel)">
+        </div>
+        <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3AddCourse()">+ Ajouter le cours</button></div>
+        <div id="v3-courses" style="margin-top:12px"></div>
+      </div>
+
+      <div class="v3-card" style="margin-top:14px">
+        <h3>Ressources</h3>
+        <div class="v3-admin-grid">
+          <input class="v3-input" id="r-name" placeholder="Nom de la ressource">
+          <input class="v3-input" id="r-url" placeholder="URL">
+          <input class="v3-input" id="r-desc" placeholder="Description">
+        </div>
+        <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3AddResource()">+ Ajouter la ressource</button></div>
+        <div id="v3-resources" style="margin-top:12px"></div>
+      </div>
+
+      <div class="v3-card" style="margin-top:14px">
+        <h3>Aperçu</h3>
+        <div class="v3-preview"><div class="v3-kpi">${esc(S.siteTitle)}</div><div>${esc(S.subtitle)}</div><div class="v3-small">${esc(S.teacher)} ${S.school?'• '+esc(S.school):''}</div></div>
+      </div>
+
+      <div class="v3-card" style="margin-top:14px">
+        <h3>Données</h3>
+        <div class="v3-row">
+          <button class="v3-btn secondary" onclick="v3Export()">Exporter</button>
+          <button class="v3-btn secondary" onclick="document.getElementById('v3-import').click()">Importer</button>
+          <input id="v3-import" type="file" accept=".json" class="v3-hidden" onchange="v3Import(this)">
+          <button class="v3-btn danger" onclick="v3Reset()">Réinitialiser V3</button>
+        </div>
+      </div>`;
+    v3RenderLists();
+  }
+
+  function v3RenderLists(){
+    const c=document.getElementById('v3-courses');
+    c.innerHTML=D.courses.length?`<table class="v3-table"><tr><th>Titre</th><th>Matière</th><th>Niveau</th><th></th></tr>`+
+      D.courses.map((x,i)=>`<tr><td>${esc(x.title)}</td><td>${esc(x.subject)}</td><td>${esc(x.level)}</td><td><button class="v3-btn danger" onclick="v3DeleteCourse(${i})">Supprimer</button></td></tr>`).join('')+'</table>':'<span class="v3-small">Aucun cours ajouté.</span>';
+    const r=document.getElementById('v3-resources');
+    r.innerHTML=D.resources.length?`<table class="v3-table"><tr><th>Nom</th><th>Description</th><th></th></tr>`+
+      D.resources.map((x,i)=>`<tr><td>${esc(x.name)}</td><td>${esc(x.desc)}</td><td><button class="v3-btn danger" onclick="v3DeleteResource(${i})">Supprimer</button></td></tr>`).join('')+'</table>':'<span class="v3-small">Aucune ressource ajoutée.</span>';
+  }
+
+  window.v3SaveIdentity=()=>{
+    S.siteTitle=document.getElementById('v3-title').value.trim()||defaults.siteTitle;
+    S.subtitle=document.getElementById('v3-sub').value.trim()||defaults.subtitle;
+    S.teacher=document.getElementById('v3-teacher').value.trim();
+    S.school=document.getElementById('v3-school').value.trim();
+    S.primary=document.getElementById('v3-color').value; save(); v3Apply(); v3Render();
+  };
+  window.v3SaveHome=()=>{
+    S.homeTitle=document.getElementById('v3-home-title').value.trim()||S.siteTitle;
+    S.homeText=document.getElementById('v3-home-text').value.trim(); save(); v3Apply(); v3Render();
+  };
+  window.v3SaveStudent=()=>{S.studentMode=document.getElementById('v3-student').checked;save();v3Apply();v3Render()};
+  window.v3SavePassword=()=>{S.adminPassword=document.getElementById('v3-pass').value;save();alert('Mot de passe local enregistré.')};
+  window.v3AddCourse=()=>{
+    const title=document.getElementById('c-title').value.trim(); if(!title)return alert('Indique un titre.');
+    D.courses.push({title,subject:document.getElementById('c-subject').value,level:document.getElementById('c-level').value,url:document.getElementById('c-url').value.trim()});save();v3Render();
+  };
+  window.v3DeleteCourse=i=>{D.courses.splice(i,1);save();v3Render()};
+  window.v3AddResource=()=>{
+    const name=document.getElementById('r-name').value.trim(); if(!name)return alert('Indique un nom.');
+    D.resources.push({name,url:document.getElementById('r-url').value.trim(),desc:document.getElementById('r-desc').value.trim()});save();v3Render();
+  };
+  window.v3DeleteResource=i=>{D.resources.splice(i,1);save();v3Render()};
+  window.v3Export=()=>{
+    const blob=new Blob([JSON.stringify({settings:S,data:D},null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tableau-hg-v3-sauvegarde.json';a.click();URL.revokeObjectURL(a.href);
+  };
+  window.v3Import=input=>{
+    const f=input.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const x=JSON.parse(rd.result);S=Object.assign({},defaults,x.settings||{});D=Object.assign({},defaultData,x.data||{});save();v3Apply();v3Render();alert('Import terminé.')}catch(e){alert('Fichier JSON invalide.')}};rd.readAsText(f);
+  };
+  window.v3Reset=()=>{if(!confirm('Réinitialiser toutes les données V3 sur cet appareil ?'))return;localStorage.removeItem(KEY);localStorage.removeItem(DATA);S=Object.assign({},defaults);D=Object.assign({},defaultData);v3Apply();v3Render()};
+
+  function v3Apply(){
+    document.documentElement.style.setProperty('--primary',S.primary);
+    const candidates=[
+      ['#siteTitle',S.siteTitle],['#brandTitle',S.siteTitle],['#heroTitle',S.homeTitle],
+      ['#siteSubtitle',S.subtitle],['#subtitle',S.subtitle]
+    ];
+    candidates.forEach(([sel,val])=>{const el=document.querySelector(sel);if(el&&val)el.textContent=val});
+    document.title=S.siteTitle;
+    // Hide visible admin controls in student mode.
+    document.querySelectorAll('[data-show="admin"],#adminBtn,.admin-only,.v3-admin-trigger').forEach(el=>el.style.display=S.studentMode?'none':'');
+  }
+
+  // Add a clear V3 administration button without depending on the original markup.
+  function addTrigger(){
+    if(document.getElementById('v3-admin-trigger'))return;
+    const header=document.querySelector('header, nav, .topbar, .navbar')||document.body;
+    const btn=document.createElement('button');btn.id='v3-admin-trigger';btn.className='v3-btn primary v3-admin-trigger';btn.textContent='⚙ Administration V3';btn.onclick=()=>{
+      if(S.adminPassword){
+        const p=prompt('Mot de passe administrateur'); if(p!==S.adminPassword)return alert('Mot de passe incorrect.');
+      }
+      v3OpenAdmin();
+    };
+    header.appendChild(btn);
+  }
+
+  window.addEventListener('DOMContentLoaded',()=>{v3Apply();addTrigger();});
+})();
+</script>
+
 </body>
 </html>
