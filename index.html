@@ -107,7 +107,51 @@ header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 9
 
 <section id="relecture" class="view"><div class="page-title"><p class="eyebrow">PRODUCTION ÉCRITE</p><h1>Relecture</h1><p>Checklist personnalisable à compléter en classe.</p></div><div class="card checklist" id="checklist"></div></section>
 
-<section id="frise" class="view"><div class="page-title"><p class="eyebrow">CHRONOLOGIE</p><h1>Frise</h1><p>Ajoutez vos propres repères.</p></div><div class="card"><div class="form-grid"><input id="eventDate" placeholder="Date / période"><input id="eventTitle" placeholder="Événement"></div><br><button onclick="addEvent()">Ajouter</button><div id="timeline" class="timeline"></div></div></section>
+<section 
+<section id="frise" class="view">
+  <div class="page-title">
+    <p class="eyebrow">CHRONOLOGIE</p>
+    <h1>Frise chronologique</h1>
+    <p>
+      Créez et consultez vos frises chronologiques avec Frise Factory.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="actions" style="margin-bottom:16px">
+      <a
+        href="https://frisefactory.laclassedhistoire.fr/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resource"
+      >
+        Ouvrir Frise Factory dans un nouvel onglet ↗
+      </a>
+    </div>
+
+    <div style="
+      width:100%;
+      height:75vh;
+      min-height:550px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:14px;
+    ">
+      <iframe
+        src="https://frisefactory.laclassedhistoire.fr/"
+        title="Frise Factory — création de frises chronologiques"
+        style="width:100%;height:100%;border:0"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <p class="muted" style="margin-top:12px">
+      Si Frise Factory ne s'affiche pas dans cette fenêtre,
+      utilisez le bouton pour l'ouvrir directement dans un nouvel onglet.
+    </p>
+  </div>
+</section><div class="page-title"><p class="eyebrow">CHRONOLOGIE</p><h1>Frise</h1><p>Ajoutez vos propres repères.</p></div><div class="card"><div class="form-grid"><input id="eventDate" placeholder="Date / période"><input id="eventTitle" placeholder="Événement"></div><br><button onclick="addEvent()">Ajouter</button><div id="timeline" class="timeline"></div></div></section>
 
 <section id="ressources" class="view"><div class="page-title"><p class="eyebrow">MES RESSOURCES</p><h1>Ressources</h1><p>Gérez vos liens depuis l’administration.</p></div><div id="resourcesFull" class="three"></div></section>
 
