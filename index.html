@@ -1,409 +1,6018 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
-<!-- TABLEAU HG V3 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tableau de bord HG — V3</title>
+
+<title>Tableau de bord HG — V4</title>
+
 <style>
-:root{--bg:#f4f5f7;--panel:#fff;--text:#20242b;--muted:#707985;--line:#e0e3e8;--accent:#283241;--soft:#edf0f3;--danger:#b34b4b;--shadow:0 8px 28px rgba(25,30,40,.06);--r:18px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}body.dark{--bg:#15181d;--panel:#20242b;--text:#f1f3f5;--muted:#aab2bd;--line:#363c45;--accent:#f1f3f5;--soft:#303640;--shadow:0 10px 30px rgba(0,0,0,.22)}
-button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;border-radius:11px;padding:10px 14px;background:var(--accent);color:var(--bg);font-weight:700}.secondary{background:var(--soft);color:var(--text)}input,textarea,select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);outline:none}.muted{color:var(--muted)}
-header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(15px);border-bottom:1px solid var(--line);padding:10px 3.5%;display:flex;align-items:center;gap:25px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800;white-space:nowrap}.mark{width:38px;height:38px;display:grid;place-items:center;background:var(--accent);color:var(--bg);border-radius:11px;font-size:12px}.nav{display:flex;gap:16px;overflow:auto;flex:1}.nav button{background:none;color:var(--muted);padding:7px 3px;white-space:nowrap}.nav button.active,.nav button:hover{color:var(--text)}.head-actions{display:flex;gap:6px}
-.layout{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:calc(100vh - 59px)}aside{border-right:1px solid var(--line);padding:25px 15px;position:sticky;top:59px;height:calc(100vh - 59px);overflow:auto}.side-title{font-size:11px;letter-spacing:.13em;color:var(--muted);font-weight:800;margin:8px 10px}.side button{display:flex;width:100%;align-items:center;gap:11px;background:none;color:var(--text);font-weight:600;text-align:left;margin:2px 0}.side button:hover,.side button.active{background:var(--soft)}main{max-width:1200px;width:100%;margin:auto;padding:45px 30px 90px}.view{display:none}.view.active{display:block}.eyebrow{font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:800;margin:0 0 9px}.hero{display:flex;justify-content:space-between;gap:35px;align-items:center;padding:25px 0 50px}.hero h1{font-size:clamp(38px,5vw,65px);line-height:1;letter-spacing:-.05em;margin:0 0 18px}.hero p{font-size:18px;color:var(--muted);max-width:690px}.hero-card,.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}.hero-card{padding:25px;min-width:220px}.hero-card .big{font-size:38px}.section-head{margin:35px 0 17px}.section-head h2{margin:0 0 4px;font-size:24px}.section-head p{margin:0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{padding:22px;min-height:155px;text-align:left;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.tool:hover{transform:translateY(-2px)}.tool .ico{font-size:27px;display:block;margin-bottom:24px}.tool strong,.tool small{display:block}.tool small{color:var(--muted);margin-top:4px}.page-title{margin-bottom:30px}.page-title h1{font-size:46px;letter-spacing:-.04em;margin:0 0 8px}.card{padding:25px}.two{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.resource{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel);text-decoration:none;color:var(--text);display:block}.resource:hover{background:var(--soft)}.resource small{color:var(--muted)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:14px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.actions{display:flex;gap:9px;flex-wrap:wrap}.timer{text-align:center}.timer-display{font-size:clamp(70px,13vw,150px);font-weight:800;letter-spacing:-.07em;font-variant-numeric:tabular-nums}.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--accent);width:100%}.date-big{text-align:center;padding:55px}.date-big .day{font-size:clamp(35px,6vw,72px);font-weight:800;letter-spacing:-.05em}.date-big .time{font-size:30px;color:var(--muted);margin:10px}.map{min-height:390px;position:relative;overflow:hidden;background:var(--panel)}.map-bg{position:absolute;inset:0;opacity:.45;background:linear-gradient(28deg,transparent 45%,var(--line) 46%,transparent 47%),linear-gradient(118deg,transparent 48%,var(--line) 49%,transparent 50%),radial-gradient(circle at 30% 35%,var(--soft) 0 20%,transparent 21%),radial-gradient(circle at 72% 65%,var(--soft) 0 24%,transparent 25%)}.map-content{position:relative}.result-list{display:grid;gap:8px;margin-top:15px}.result{padding:12px;border:1px solid var(--line);border-radius:10px}.checklist{display:grid}.check{display:flex;gap:12px;padding:17px 0;border-bottom:1px solid var(--line)}.check input{width:auto}.projection{margin-top:15px;padding:38px;border:2px dashed var(--line);border-radius:var(--r);font-size:32px;font-weight:750;min-height:160px}.timeline{display:flex;overflow:auto;padding:40px 5px}.event{min-width:200px;border-top:3px solid var(--accent);padding:14px;position:relative}.event:before{content:"";position:absolute;top:-8px;left:12px;width:12px;height:12px;border-radius:50%;background:var(--accent)}.event small{color:var(--muted)}.event button{background:none;color:var(--muted);padding:5px 0}.admin-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}.admin-tabs button.active{background:var(--accent);color:var(--bg)}.list-item{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 0;border-bottom:1px solid var(--line)}.list-item:last-child{border:0}.danger{background:#f3dddd;color:var(--danger)}.empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}footer{text-align:center;color:var(--muted);font-size:12px;padding:25px;border-top:1px solid var(--line)}
-@media(max-width:950px){.layout{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow:auto;padding:10px}.side-title{display:none}.side{display:flex}.side button{width:auto;white-space:nowrap}.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}}
-@media(max-width:600px){header{flex-wrap:wrap}.nav{order:3;flex-basis:100%}main{padding:30px 15px 70px}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.hero h1{font-size:43px}.page-title h1{font-size:38px}}
-</style>
 
-<style id="v3-css">
-.v3-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:var(--primary,#2563eb);color:#fff;font-size:.72rem;font-weight:700}
-.v3-admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.v3-card{background:var(--card,#fff);border:1px solid var(--border,#e5e7eb);border-radius:16px;padding:16px}
-.v3-card h3{margin:0 0 8px}.v3-card p{color:var(--muted,#64748b)}
-.v3-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.v3-input,.v3-select,.v3-textarea{width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--border,#d1d5db);border-radius:10px;background:var(--bg,#fff);color:inherit}
-.v3-textarea{min-height:110px;resize:vertical}
-.v3-btn{border:0;border-radius:10px;padding:9px 12px;cursor:pointer;font-weight:600}
-.v3-btn.primary{background:var(--primary,#2563eb);color:#fff}.v3-btn.secondary{background:#eef2f7;color:inherit}.v3-btn.danger{background:#fee2e2;color:#991b1b}
-.v3-table{width:100%;border-collapse:collapse}.v3-table th,.v3-table td{padding:9px;border-bottom:1px solid var(--border,#e5e7eb);text-align:left;vertical-align:top}
-.v3-preview{padding:18px;border-radius:14px;background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(16,185,129,.08));min-height:90px}
-.v3-color{height:42px;width:70px;padding:3px}.v3-hidden{display:none!important}
-.v3-lock{max-width:420px;margin:auto}
-.v3-kpi{font-size:1.6rem;font-weight:800}
-.v3-small{font-size:.85rem;color:var(--muted,#64748b)}
-@media(max-width:700px){.v3-table{font-size:.9rem}.v3-table th:nth-child(4),.v3-table td:nth-child(4){display:none}}
-</style>
+:root{
+  --bg:#f4f5f7;
+  --panel:#fff;
+  --text:#20242b;
+  --muted:#707985;
+  --line:#e0e3e8;
+  --accent:#283241;
+  --soft:#edf0f3;
+  --danger:#b34b4b;
+  --shadow:0 8px 28px rgba(25,30,40,.06);
+  --r:18px
+}
 
+*{
+  box-sizing:border-box
+}
+
+html{
+  scroll-behavior:smooth
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif
+}
+
+body.dark{
+  --bg:#15181d;
+  --panel:#20242b;
+  --text:#f1f3f5;
+  --muted:#aab2bd;
+  --line:#363c45;
+  --accent:#f1f3f5;
+  --soft:#303640;
+  --shadow:0 10px 30px rgba(0,0,0,.22)
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit
+}
+
+button{
+  cursor:pointer;
+  border:0;
+  border-radius:11px;
+  padding:10px 14px;
+  background:var(--accent);
+  color:var(--bg);
+  font-weight:700
+}
+
+.secondary{
+  background:var(--soft);
+  color:var(--text)
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--panel);
+  color:var(--text);
+  outline:none
+}
+
+.muted{
+  color:var(--muted)
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:color-mix(in srgb,var(--bg) 93%,transparent);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--line);
+  padding:10px 3.5%;
+  display:flex;
+  align-items:center;
+  gap:25px
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:800;
+  white-space:nowrap
+}
+
+.mark{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  background:var(--accent);
+  color:var(--bg);
+  border-radius:11px;
+  font-size:12px
+}
+
+nav{
+  display:flex;
+  gap:16px;
+  overflow:auto;
+  flex:1
+}
+
+nav button{
+  background:none;
+  color:var(--muted);
+  padding:7px 3px;
+  white-space:nowrap
+}
+
+nav button.active,
+nav button:hover{
+  color:var(--text)
+}
+
+.head-actions{
+  display:flex;
+  gap:6px
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:245px minmax(0,1fr);
+  min-height:calc(100vh - 59px)
+}
+
+aside{
+  border-right:1px solid var(--line);
+  padding:25px 15px;
+  position:sticky;
+  top:59px;
+  height:calc(100vh - 59px);
+  overflow:auto
+}
+
+.side-title{
+  font-size:11px;
+  letter-spacing:.13em;
+  color:var(--muted);
+  font-weight:800;
+  margin:8px 10px
+}
+
+.side button{
+  display:flex;
+  width:100%;
+  align-items:center;
+  gap:11px;
+  background:none;
+  color:var(--text);
+  font-weight:600;
+  text-align:left;
+  margin:2px 0
+}
+
+.side button:hover,
+.side button.active{
+  background:var(--soft)
+}
+
+main{
+  max-width:1200px;
+  width:100%;
+  margin:auto;
+  padding:45px 30px 90px
+}
+
+.view{
+  display:none
+}
+
+.view.active{
+  display:block
+}
+
+.eyebrow{
+  font-size:11px;
+  letter-spacing:.14em;
+  color:var(--muted);
+  font-weight:800;
+  margin:0 0 9px
+}
+
+.hero{
+  display:flex;
+  justify-content:space-between;
+  gap:35px;
+  align-items:center;
+  padding:25px 0 50px
+}
+
+.hero h1{
+  font-size:clamp(38px,5vw,65px);
+  line-height:1;
+  letter-spacing:-.05em;
+  margin:0 0 18px
+}
+
+.hero p{
+  font-size:18px;
+  color:var(--muted);
+  max-width:690px
+}
+
+.hero-card,
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow)
+}
+
+.hero-card{
+  padding:25px;
+  min-width:220px
+}
+
+.hero-card .big{
+  font-size:38px
+}
+
+.section-head{
+  margin:35px 0 17px
+}
+
+.section-head h2{
+  margin:0 0 4px;
+  font-size:24px
+}
+
+.section-head p{
+  margin:0;
+  color:var(--muted)
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px
+}
+
+.tool{
+  padding:22px;
+  min-height:155px;
+  text-align:left;
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  transition:.15s
+}
+
+.tool:hover{
+  transform:translateY(-2px)
+}
+
+.tool .ico{
+  font-size:27px;
+  display:block;
+  margin-bottom:24px
+}
+
+.tool strong,
+.tool small{
+  display:block
+}
+
+.tool small{
+  color:var(--muted);
+  margin-top:4px
+}
+
+.page-title{
+  margin-bottom:30px
+}
+
+.page-title h1{
+  font-size:46px;
+  letter-spacing:-.04em;
+  margin:0 0 8px
+}
+
+.card{
+  padding:25px
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:16px
+}
+
+.three{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.resource{
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--panel);
+  text-decoration:none;
+  color:var(--text);
+  display:block
+}
+
+.resource:hover{
+  background:var(--soft)
+}
+
+.resource small{
+  color:var(--muted)
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.field{
+  margin-bottom:14px
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px
+}
+
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap
+}
+
+.timer{
+  text-align:center
+}
+
+.timer-display{
+  font-size:clamp(70px,13vw,150px);
+  font-weight:800;
+  letter-spacing:-.07em;
+  font-variant-numeric:tabular-nums
+}
+
+.bar{
+  height:8px;
+  background:var(--soft);
+  border-radius:99px;
+  overflow:hidden
+}
+
+.bar span{
+  display:block;
+  height:100%;
+  background:var(--accent);
+  width:100%
+}
+
+.date-big{
+  text-align:center;
+  padding:55px
+}
+
+.date-big .day{
+  font-size:clamp(35px,6vw,72px);
+  font-weight:800;
+  letter-spacing:-.05em
+}
+
+.date-big .time{
+  font-size:30px;
+  color:var(--muted);
+  margin:10px
+}
+
+.map{
+  min-height:390px;
+  position:relative;
+  overflow:hidden;
+  background:var(--panel)
+}
+
+.map-bg{
+  position:absolute;
+  inset:0;
+  opacity:.45;
+  background:
+    linear-gradient(28deg,transparent 45%,var(--line) 46%,transparent 47%),
+    linear-gradient(118deg,transparent 48%,var(--line) 49%,transparent 50%),
+    radial-gradient(circle at 30% 35%,var(--soft) 0 20%,transparent 21%),
+    radial-gradient(circle at 72% 65%,var(--soft) 0 24%,transparent 25%)
+}
+
+.map-content{
+  position:relative
+}
+
+.result-list{
+  display:grid;
+  gap:8px;
+  margin-top:15px
+}
+
+.result{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:10px
+}
+
+.checklist{
+  display:grid
+}
+
+.check{
+  display:flex;
+  gap:12px;
+  padding:17px 0;
+  border-bottom:1px solid var(--line)
+}
+
+.check input{
+  width:auto
+}
+
+.projection{
+  margin-top:15px;
+  padding:38px;
+  border:2px dashed var(--line);
+  border-radius:var(--r);
+  font-size:32px;
+  font-weight:750;
+  min-height:160px
+}
+
+.timeline{
+  display:flex;
+  overflow:auto;
+  padding:40px 5px
+}
+
+.event{
+  min-width:200px;
+  border-top:3px solid var(--accent);
+  padding:14px;
+  position:relative
+}
+
+.event:before{
+  content:"";
+  position:absolute;
+  top:-8px;
+  left:12px;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:var(--accent)
+}
+
+.event small{
+  color:var(--muted)
+}
+
+.event button{
+  background:none;
+  color:var(--muted);
+  padding:5px 0
+}
+
+.admin-tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px;
+  flex-wrap:wrap
+}
+
+.admin-tabs button.active{
+  background:var(--accent);
+  color:var(--bg)
+}
+
+.list-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line)
+}
+
+.list-item:last-child{
+  border:0
+}
+
+.danger{
+  background:#f3dddd;
+  color:var(--danger)
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+  border:1px dashed var(--line);
+  border-radius:14px
+}
+
+
+/* =========================================================
+   OUTIL SIÈCLE & MILLÉNAIRE
+   ========================================================= */
+
+.century-tool{
+  max-width:900px;
+  margin:auto
+}
+
+.century-result{
+  background:var(--soft);
+  border-radius:16px;
+  padding:28px;
+  text-align:center;
+  margin-top:24px
+}
+
+.century-result .main-result{
+  font-size:clamp(35px,6vw,60px);
+  font-weight:800;
+  letter-spacing:-.04em
+}
+
+.century-result .secondary-result{
+  font-size:25px;
+  color:var(--muted);
+  margin-top:8px
+}
+
+.century-explanation{
+  margin-top:16px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  line-height:1.7
+}
+
+.century-tip{
+  margin-top:18px;
+  padding:18px;
+  border-radius:14px;
+  background:var(--soft);
+  line-height:1.65
+}
+
+.century-examples{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:15px
+}
+
+.century-example{
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel)
+}
+
+
+/* =========================================================
+   V3 ADMIN
+   ========================================================= */
+
+.v3-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:var(--primary,#2563eb);
+  color:#fff;
+  font-size:.72rem;
+  font-weight:700
+}
+
+.v3-admin-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px
+}
+
+.v3-card{
+  background:var(--card,#fff);
+  border:1px solid var(--border,#e5e7eb);
+  border-radius:16px;
+  padding:16px
+}
+
+.v3-card h3{
+  margin:0 0 8px
+}
+
+.v3-card p{
+  color:var(--muted,#64748b)
+}
+
+.v3-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center
+}
+
+.v3-input,
+.v3-select,
+.v3-textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 12px;
+  border:1px solid var(--border,#d1d5db);
+  border-radius:10px;
+  background:var(--bg,#fff);
+  color:inherit
+}
+
+.v3-textarea{
+  min-height:110px;
+  resize:vertical
+}
+
+.v3-btn{
+  border:0;
+  border-radius:10px;
+  padding:9px 12px;
+  cursor:pointer;
+  font-weight:600
+}
+
+.v3-btn.primary{
+  background:var(--primary,#2563eb);
+  color:#fff
+}
+
+.v3-btn.secondary{
+  background:#eef2f7;
+  color:inherit
+}
+
+.v3-btn.danger{
+  background:#fee2e2;
+  color:#991b1b
+}
+
+.v3-table{
+  width:100%;
+  border-collapse:collapse
+}
+
+.v3-table th,
+.v3-table td{
+  padding:9px;
+  border-bottom:1px solid var(--border,#e5e7eb);
+  text-align:left;
+  vertical-align:top
+}
+
+.v3-preview{
+  padding:18px;
+  border-radius:14px;
+  background:linear-gradient(
+    135deg,
+    rgba(37,99,235,.12),
+    rgba(16,185,129,.08)
+  );
+  min-height:90px
+}
+
+.v3-color{
+  height:42px;
+  width:70px;
+  padding:3px
+}
+
+.v3-hidden{
+  display:none!important
+}
+
+.v3-lock{
+  max-width:420px;
+  margin:auto
+}
+
+.v3-kpi{
+  font-size:1.6rem;
+  font-weight:800
+}
+
+.v3-small{
+  font-size:.85rem;
+  color:var(--muted,#64748b)
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:950px){
+
+  .layout{
+    grid-template-columns:1fr
+  }
+
+  aside{
+    position:static;
+    height:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    gap:5px;
+    overflow:auto;
+    padding:10px
+  }
+
+  .side-title{
+    display:none
+  }
+
+  .side{
+    display:flex
+  }
+
+  .side button{
+    width:auto;
+    white-space:nowrap
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .two{
+    grid-template-columns:1fr
+  }
+
+  .three{
+    grid-template-columns:1fr
+  }
+
+  .hero{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+}
+
+@media(max-width:700px){
+
+  .v3-table{
+    font-size:.9rem
+  }
+
+  .v3-table th:nth-child(4),
+  .v3-table td:nth-child(4){
+    display:none
+  }
+
+  .century-examples{
+    grid-template-columns:1fr
+  }
+
+}
+
+@media(max-width:600px){
+
+  header{
+    flex-wrap:wrap
+  }
+
+  nav{
+    order:3;
+    flex-basis:100%
+  }
+
+  main{
+    padding:30px 15px 70px
+  }
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .form-grid{
+    grid-template-columns:1fr
+  }
+
+  .hero h1{
+    font-size:43px
+  }
+
+  .page-title h1{
+    font-size:38px
+  }
+
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:25px;
+  border-top:1px solid var(--line)
+}
+
+</style>
 </head>
+
+
 <body>
+
 <header>
-<a class="brand" href="#accueil" onclick="show('accueil')"><span class="mark">HG</span><span id="siteNameTop">Tableau de bord HG</span></a>
+
+<a class="brand"
+   href="#accueil"
+   onclick="show('accueil')">
+
+  <span class="mark">HG</span>
+
+  <span id="siteNameTop">
+    Tableau de bord HG
+  </span>
+
+</a>
+
+
 <nav>
-<button data-show="accueil">Accueil</button><button data-show="histoire">Histoire</button><button data-show="geographie">Géographie</button><button data-show="emc">EMC</button><button data-show="outils">Outils</button><button data-show="ressources">Ressources</button><button data-show="admin">⚙ Administration</button>
+
+<button data-show="accueil">
+  Accueil
+</button>
+
+<button data-show="histoire">
+  Histoire
+</button>
+
+<button data-show="geographie">
+  Géographie
+</button>
+
+<button data-show="emc">
+  EMC
+</button>
+
+<button data-show="outils">
+  Outils
+</button>
+
+<button data-show="ressources">
+  Ressources
+</button>
+
+<button data-show="admin">
+  ⚙ Administration
+</button>
+
 </nav>
-<div class="head-actions"><button class="secondary" onclick="toggleTheme()">◐</button></div>
+
+
+<div class="head-actions">
+
+<button
+  class="secondary"
+  onclick="toggleTheme()">
+  ◐
+</button>
+
+</div>
+
 </header>
 
+
 <div class="layout">
+
+
 <aside>
-<div class="side">
-<div class="side-title">ENSEIGNEMENTS</div>
-<button data-show="histoire">📚 Histoire</button>
-<button data-show="geographie">🌍 Géographie</button>
-<button data-show="emc">⚖️ EMC</button>
-</div>
 
 <div class="side">
-  <div class="side-title">NIVEAUX</div>
-  <button data-level="6e">6e</button>
-  <button data-level="5e">5e</button>
-  <button data-level="4e">4e</button>
-  <button data-level="3e">3e</button>
-  <button data-level="2de">2de</button>
-  <button data-level="1re">1re</button>
-  <button data-level="Terminale">Terminale</button>
+
+<div class="side-title">
+ENSEIGNEMENTS
 </div>
+
+<button data-show="histoire">
+📚 Histoire
+</button>
+
+<button data-show="geographie">
+🌍 Géographie
+</button>
+
+<button data-show="emc">
+⚖️ EMC
+</button>
+
+</div>
+
+
 <div class="side">
-<div class="side-title">OUTILS</div>
-<button data-show="outils">🛠️ Tous les outils</button><button data-show="minuteur">⏱️ Minuteur</button><button data-show="groupes">👥 Groupes</button><button data-show="cartes">🗺️ Cartes</button><button data-show="consignes">📝 Consignes</button><button data-show="relecture">✓ Relecture</button><button data-show="frise">↔ Frise</button>
+
+<div class="side-title">
+NIVEAUX
 </div>
+
+<button data-level="6e">
+6e
+</button>
+
+<button data-level="5e">
+5e
+</button>
+
+<button data-level="4e">
+4e
+</button>
+
+<button data-level="3e">
+3e
+</button>
+
+<button data-level="2de">
+2de
+</button>
+
+<button data-level="1re">
+1re
+</button>
+
+<button data-level="Terminale">
+Terminale
+</button>
+
+</div>
+
+
+<div class="side">
+
+<div class="side-title">
+OUTILS
+</div>
+
+<button data-show="outils">
+🛠️ Tous les outils
+</button>
+
+<button data-show="minuteur">
+⏱️ Minuteur
+</button>
+
+<button data-show="groupes">
+👥 Groupes
+</button>
+
+<button data-show="cartes">
+🗺️ Cartes
+</button>
+
+<button data-show="consignes">
+📝 Consignes
+</button>
+
+<button data-show="relecture">
+✓ Relecture
+</button>
+
+<button data-show="frise">
+↔ Frise
+</button>
+
+<button data-show="siecle">
+📅 Siècle
+</button>
+
+</div>
+
 </aside>
+
 
 <main>
 
+
+<!-- =====================================================
+     ACCUEIL
+     ===================================================== -->
+
 <section id="accueil" class="view">
-<div class="hero"><div><p class="eyebrow">TABLEAU DE BORD</p><h1 id="heroTitle">Les essentiels du cours d’HG,<br>à portée de clic.</h1><p id="heroSubtitle">Un espace central pour organiser vos cours, lancer vos outils et retrouver vos ressources.</p></div><div class="hero-card"><div class="big">⌁</div><strong>Bienvenue</strong><p id="homeDate" class="muted"></p></div></div>
-<div class="section-head"><h2>Mes outils</h2><p>Accès rapide aux fonctions de la classe.</p></div>
-<div class="grid">
-<button class="tool" data-show="minuteur"><span class="ico">⏱️</span><strong>Minuteur</strong><small>Chronométrer une activité</small></button>
-<button class="tool" data-show="cartes"><span class="ico">🗺️</span><strong>Cartes</strong><small>Localiser et explorer</small></button>
-<button class="tool" data-show="groupes"><span class="ico">👥</span><strong>Groupes</strong><small>Créer des groupes</small></button>
-<button class="tool" data-show="consignes"><span class="ico">📝</span><strong>Consignes</strong><small>Projeter une consigne</small></button>
-<button class="tool" data-show="relecture"><span class="ico">✓</span><strong>Relecture</strong><small>Checklist de production</small></button>
-<button class="tool" data-show="frise"><span class="ico">↔</span><strong>Frise</strong><small>Repères chronologiques</small></button>
-<button class="tool" data-show="date"><span class="ico">◷</span><strong>Date</strong><small>Date et heure projetées</small></button>
-<button class="tool" data-show="ressources"><span class="ico">🔗</span><strong>Ressources</strong><small>Vos liens favoris</small></button>
+
+<div class="hero">
+
+<div>
+
+<p class="eyebrow">
+TABLEAU DE BORD
+</p>
+
+<h1 id="heroTitle">
+Les essentiels du cours d’HG,<br>
+à portée de clic.
+</h1>
+
+<p id="heroSubtitle">
+Un espace central pour organiser vos cours,
+lancer vos outils et retrouver vos ressources.
+</p>
+
 </div>
-<div class="section-head"><h2>Dernières ressources</h2><p>Ajoutez-les depuis Administration.</p></div><div id="homeResources" class="three"></div>
+
+
+<div class="hero-card">
+
+<div class="big">
+⌁
+</div>
+
+<strong>
+Bienvenue
+</strong>
+
+<p
+  id="homeDate"
+  class="muted">
+</p>
+
+</div>
+
+</div>
+
+
+<div class="section-head">
+
+<h2>
+Mes outils
+</h2>
+
+<p>
+Accès rapide aux fonctions de la classe.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+
+<button
+  class="tool"
+  data-show="minuteur">
+
+<span class="ico">
+⏱️
+</span>
+
+<strong>
+Minuteur
+</strong>
+
+<small>
+Chronométrer une activité
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="cartes">
+
+<span class="ico">
+🗺️
+</span>
+
+<strong>
+Cartes
+</strong>
+
+<small>
+Localiser et explorer
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="groupes">
+
+<span class="ico">
+👥
+</span>
+
+<strong>
+Groupes
+</strong>
+
+<small>
+Créer des groupes
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="consignes">
+
+<span class="ico">
+📝
+</span>
+
+<strong>
+Consignes
+</strong>
+
+<small>
+Projeter une consigne
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="relecture">
+
+<span class="ico">
+✓
+</span>
+
+<strong>
+Relecture
+</strong>
+
+<small>
+Checklist de production
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="frise">
+
+<span class="ico">
+↔
+</span>
+
+<strong>
+Frise
+</strong>
+
+<small>
+Repères chronologiques
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="siecle">
+
+<span class="ico">
+📅
+</span>
+
+<strong>
+Siècle & millénaire
+</strong>
+
+<small>
+Se repérer dans le temps
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="date">
+
+<span class="ico">
+◷
+</span>
+
+<strong>
+Date
+</strong>
+
+<small>
+Date et heure projetées
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="ressources">
+
+<span class="ico">
+🔗
+</span>
+
+<strong>
+Ressources
+</strong>
+
+<small>
+Vos liens favoris
+</small>
+
+</button>
+
+</div>
+
+
+<div class="section-head">
+
+<h2>
+Dernières ressources
+</h2>
+
+<p>
+Ajoutez-les depuis Administration.
+</p>
+
+</div>
+
+<div
+  id="homeResources"
+  class="three">
+</div>
+
 </section>
 
-<section id="histoire" class="view subject"><div class="page-title"><p class="eyebrow">HISTOIRE</p><h1>Histoire</h1><p>Organisez vos séquences et ressources par niveau.</p></div><div id="historyLevels" class="grid"></div></section>
-<section id="geographie" class="view subject"><div class="page-title"><p class="eyebrow">GÉOGRAPHIE</p><h1>Géographie</h1><p>Organisez vos séquences et ressources par niveau.</p></div><div id="geoLevels" class="grid"></div></section>
-<section id="emc" class="view subject"><div class="page-title"><p class="eyebrow">EMC</p><h1>Enseignement moral et civique</h1><p>Vos thèmes, activités et ressources d’EMC.</p></div><div id="emcContent" class="three"></div></section>
 
-<section id="outils" class="view"><div class="page-title"><p class="eyebrow">OUTILS</p><h1>Outils de classe</h1><p>Tout ce qu’il faut pour piloter une séance.</p></div><div class="grid">
-<button class="tool" data-show="minuteur"><span class="ico">⏱️</span><strong>Minuteur</strong><small>Décompte configurable</small></button><button class="tool" data-show="date"><span class="ico">◷</span><strong>Date</strong><small>Horloge de projection</small></button><button class="tool" data-show="groupes"><span class="ico">👥</span><strong>Groupes</strong><small>Répartition aléatoire</small></button><button class="tool" data-show="cartes"><span class="ico">🗺️</span><strong>Cartes</strong><small>Recherche de lieux</small></button><button class="tool" data-show="consignes"><span class="ico">📝</span><strong>Consignes</strong><small>Affichage plein écran</small></button><button class="tool" data-show="relecture"><span class="ico">✓</span><strong>Relecture</strong><small>Checklist</small></button><button class="tool" data-show="frise"><span class="ico">↔</span><strong>Frise</strong><small>Repères personnalisés</small></button>
-</div></section>
+<!-- =====================================================
+     HISTOIRE
+     ===================================================== -->
 
-<section id="date" class="view"><div class="page-title"><p class="eyebrow">SE REPÉRER</p><h1>Date & séance</h1><p>Un affichage lisible pour la projection.</p></div><div class="card date-big"><div id="bigDate" class="day"></div><div id="bigTime" class="time"></div><input id="sessionTitle" placeholder="Titre / objectif de la séance"></div></section>
+<section
+  id="histoire"
+  class="view subject">
 
-<section id="minuteur" class="view"><div class="page-title"><p class="eyebrow">SÉANCE</p><h1>Minuteur</h1><p>Définissez une durée et lancez le décompte.</p></div><div class="card timer"><div id="timerDisplay" class="timer-display">10:00</div><div class="bar"><span id="timerBar"></span></div><div class="form-grid" style="margin:25px 0"><div class="field"><label>Durée en minutes</label><input id="timerMinutes" type="number" min="1" max="180" value="10"></div><div class="field"><label>Fin</label><select id="timerAlert"><option value="alert">Signal</option><option value="silent">Silencieux</option></select></div></div><div class="actions" style="justify-content:center"><button onclick="timerStart()">Démarrer</button><button class="secondary" onclick="timerPause()">Pause</button><button class="secondary" onclick="timerReset()">Réinitialiser</button></div><p id="timerStatus" class="muted">Prêt.</p></div></section>
+<div class="page-title">
 
-<section id="cartes" class="view"><div class="page-title"><p class="eyebrow">LOCALISER</p><h1>Cartes</h1><p>Outils cartographiques externes et recherche de lieux.</p></div><div class="two"><div class="card map"><div class="map-bg"></div><div class="map-content"><p class="eyebrow">CARTE</p><h2>Espace cartographique</h2><p class="muted">Vous pouvez remplacer cet espace par une carte intégrée ou une image dans le code.</p><button onclick="openMap()">Ouvrir OpenStreetMap</button></div></div><div class="card"><h3>Recherche</h3><div class="field"><input id="place" placeholder="Sahel, Paris, détroit de Malacca..."></div><button onclick="searchPlace()">Rechercher</button><hr><a class="resource" href="https://www.openstreetmap.org/" target="_blank">OpenStreetMap<br><small>Cartographie libre</small></a><br><a class="resource" href="https://www.geoportail.gouv.fr/" target="_blank">Géoportail<br><small>Cartographie et données</small></a></div></div></section>
+<p class="eyebrow">
+HISTOIRE
+</p>
 
-<section id="groupes" class="view"><div class="page-title"><p class="eyebrow">COOPÉRER</p><h1>Groupes & tirage</h1><p>Une liste par ligne, puis choisissez la taille des groupes.</p></div><div class="two"><div class="card"><h3>Élèves</h3><textarea id="students" rows="15" placeholder="Un élève par ligne"></textarea><br><br><button onclick="saveStudents()">Enregistrer</button></div><div class="card"><h3>Répartition</h3><div class="field"><label>Taille des groupes</label><input id="groupSize" type="number" min="2" value="3"></div><div class="actions"><button onclick="makeGroups()">Créer</button><button class="secondary" onclick="drawStudent()">Tirer au sort</button></div><div id="groupsResult" class="result-list"></div><div id="drawResult" style="font-size:34px;font-weight:800;text-align:center;padding:25px">?</div></div></div></section>
+<h1>
+Histoire
+</h1>
 
-<section id="consignes" class="view"><div class="page-title"><p class="eyebrow">PROJETER</p><h1>Consigne</h1><p>Créez une consigne lisible au tableau.</p></div><div class="card"><textarea id="instruction" rows="7" placeholder="Écrivez votre consigne..."></textarea><br><br><div class="actions"><button onclick="showInstruction()">Afficher</button><button class="secondary" onclick="clearInstruction()">Effacer</button></div><div id="projection" class="projection"></div></div></section>
+<p>
+Organisez vos séquences et ressources par niveau.
+</p>
 
-<section id="relecture" class="view"><div class="page-title"><p class="eyebrow">PRODUCTION ÉCRITE</p><h1>Relecture</h1><p>Checklist personnalisable à compléter en classe.</p></div><div class="card checklist" id="checklist"></div></section>
+</div>
 
-<section 
-<section id="frise" class="view">
-  <div class="page-title">
-    <p class="eyebrow">CHRONOLOGIE</p>
-    <h1>Frise chronologique</h1>
-    <p>
-      Créez et consultez vos frises chronologiques avec Frise Factory.
-    </p>
-  </div>
+<div
+  id="historyLevels"
+  class="grid">
+</div>
 
-  <div class="card">
-    <div class="actions" style="margin-bottom:16px">
-      <a
-        href="https://frisefactory.laclassedhistoire.fr/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="resource"
-      >
-        Ouvrir Frise Factory dans un nouvel onglet ↗
-      </a>
-    </div>
-
-    <div style="
-      width:100%;
-      height:75vh;
-      min-height:550px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:14px;
-    ">
-      <iframe
-        src="https://frisefactory.laclassedhistoire.fr/"
-        title="Frise Factory — création de frises chronologiques"
-        style="width:100%;height:100%;border:0"
-        loading="lazy"
-        allowfullscreen
-      ></iframe>
-    </div>
-
-    <p class="muted" style="margin-top:12px">
-      Si Frise Factory ne s'affiche pas dans cette fenêtre,
-      utilisez le bouton pour l'ouvrir directement dans un nouvel onglet.
-    </p>
-  </div>
-</section><div class="page-title"><p class="eyebrow">CHRONOLOGIE</p><h1>Frise</h1><p>Ajoutez vos propres repères.</p></div><div class="card"><div class="form-grid"><input id="eventDate" placeholder="Date / période"><input id="eventTitle" placeholder="Événement"></div><br><button onclick="addEvent()">Ajouter</button><div id="timeline" class="timeline"></div></div></section>
-
-<section id="ressources" class="view"><div class="page-title"><p class="eyebrow">MES RESSOURCES</p><h1>Ressources</h1><p>Gérez vos liens depuis l’administration.</p></div><div id="resourcesFull" class="three"></div></section>
-
-<section id="admin" class="view"><div class="page-title"><p class="eyebrow">PERSONNALISATION</p><h1>Administration</h1><p>Cette partie vous permet de modifier le contenu sans toucher au code.</p></div>
-<div class="admin-tabs"><button class="active" onclick="adminTab('general',this)">Général</button><button onclick="adminTab('courses',this)">Cours</button><button onclick="adminTab('links',this)">Ressources</button><button onclick="adminTab('check',this)">Relecture</button><button onclick="adminTab('data',this)">Données</button></div>
-<div id="admin-general" class="admin-panel card"><h3>Identité du site</h3><div class="form-grid"><div class="field"><label>Nom</label><input id="adminSiteName"></div><div class="field"><label>Sous-titre</label><input id="adminSubtitle"></div></div><button onclick="saveGeneral()">Enregistrer</button></div>
-<div id="admin-courses" class="admin-panel card" style="display:none"><h3>Ajouter un cours</h3><div class="form-grid"><div class="field"><label>Matière</label><select id="courseSubject"><option>Histoire</option><option>Géographie</option><option>EMC</option></select></div><div class="field"><label>Niveau</label><select id="courseLevel"><option>6e</option><option>5e</option><option>4e</option><option>3e</option><option>2de</option><option>1re</option><option>Terminale</option></select></div></div><div class="form-grid"><div class="field"><label>Titre</label><input id="courseTitle" placeholder="Ex. La Méditerranée antique"></div><div class="field"><label>Lien (facultatif)</label><input id="courseUrl" placeholder="https://..."></div></div><button onclick="addCourse()">Ajouter le cours</button><div id="courseAdminList"></div></div>
-<div id="admin-links" class="admin-panel card" style="display:none"><h3>Ajouter une ressource</h3><div class="form-grid"><input id="linkName" placeholder="Nom"><input id="linkUrl" placeholder="https://..."></div><br><input id="linkDesc" placeholder="Description"><br><br><button onclick="addLink()">Ajouter</button><div id="linkAdminList"></div></div>
-<div id="admin-check" class="admin-panel card" style="display:none"><h3>Checklist</h3><div class="inline" style="display:flex;gap:8px"><input id="checkText" placeholder="Nouvelle étape"><button onclick="addCheck()">Ajouter</button></div><div id="checkAdminList"></div></div>
-<div id="admin-data" class="admin-panel card" style="display:none"><h3>Sauvegarde</h3><p class="muted">Exportez vos réglages pour les conserver ou les transférer sur un autre navigateur.</p><div class="actions"><button onclick="exportData()">Exporter JSON</button><label class="secondary" style="padding:10px 14px;border-radius:11px;font-weight:700;cursor:pointer">Importer <input id="importData" type="file" accept=".json" hidden onchange="importDataFile(event)"></label><button class="danger" onclick="resetData()">Réinitialiser</button></div></div>
 </section>
+
+
+<!-- =====================================================
+     GEOGRAPHIE
+     ===================================================== -->
+
+<section
+  id="geographie"
+  class="view subject">
+
+<div class="page-title">
+
+<p class="eyebrow">
+GÉOGRAPHIE
+</p>
+
+<h1>
+Géographie
+</h1>
+
+<p>
+Organisez vos séquences et ressources par niveau.
+</p>
+
+</div>
+
+<div
+  id="geoLevels"
+  class="grid">
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     EMC
+     ===================================================== -->
+
+<section
+  id="emc"
+  class="view subject">
+
+<div class="page-title">
+
+<p class="eyebrow">
+EMC
+</p>
+
+<h1>
+Enseignement moral et civique
+</h1>
+
+<p>
+Vos thèmes, activités et ressources d’EMC.
+</p>
+
+</div>
+
+<div
+  id="emcContent"
+  class="three">
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     OUTILS
+     ===================================================== -->
+
+<section
+  id="outils"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+OUTILS
+</p>
+
+<h1>
+Outils de classe
+</h1>
+
+<p>
+Tout ce qu’il faut pour piloter une séance.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+
+<button
+  class="tool"
+  data-show="minuteur">
+
+<span class="ico">
+⏱️
+</span>
+
+<strong>
+Minuteur
+</strong>
+
+<small>
+Décompte configurable
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="date">
+
+<span class="ico">
+◷
+</span>
+
+<strong>
+Date
+</strong>
+
+<small>
+Horloge de projection
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="groupes">
+
+<span class="ico">
+👥
+</span>
+
+<strong>
+Groupes
+</strong>
+
+<small>
+Répartition aléatoire
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="cartes">
+
+<span class="ico">
+🗺️
+</span>
+
+<strong>
+Cartes
+</strong>
+
+<small>
+Recherche de lieux
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="consignes">
+
+<span class="ico">
+📝
+</span>
+
+<strong>
+Consignes
+</strong>
+
+<small>
+Affichage plein écran
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="relecture">
+
+<span class="ico">
+✓
+</span>
+
+<strong>
+Relecture
+</strong>
+
+<small>
+Checklist
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="frise">
+
+<span class="ico">
+↔
+</span>
+
+<strong>
+Frise
+</strong>
+
+<small>
+Repères personnalisés
+</small>
+
+</button>
+
+
+<button
+  class="tool"
+  data-show="siecle">
+
+<span class="ico">
+📅
+</span>
+
+<strong>
+Siècle & millénaire
+</strong>
+
+<small>
+Exercice de chronologie
+</small>
+
+</button>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     DATE
+     ===================================================== -->
+
+<section
+  id="date"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+SE REPÉRER
+</p>
+
+<h1>
+Date & séance
+</h1>
+
+<p>
+Un affichage lisible pour la projection.
+</p>
+
+</div>
+
+
+<div class="card date-big">
+
+<div
+  id="bigDate"
+  class="day">
+</div>
+
+<div
+  id="bigTime"
+  class="time">
+</div>
+
+<input
+  id="sessionTitle"
+  placeholder="Titre / objectif de la séance">
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     MINUTEUR
+     ===================================================== -->
+
+<section
+  id="minuteur"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+SÉANCE
+</p>
+
+<h1>
+Minuteur
+</h1>
+
+<p>
+Définissez une durée et lancez le décompte.
+</p>
+
+</div>
+
+
+<div class="card timer">
+
+<div
+  id="timerDisplay"
+  class="timer-display">
+10:00
+</div>
+
+<div class="bar">
+
+<span id="timerBar">
+</span>
+
+</div>
+
+
+<div
+  class="form-grid"
+  style="margin:25px 0">
+
+<div class="field">
+
+<label>
+Durée en minutes
+</label>
+
+<input
+  id="timerMinutes"
+  type="number"
+  min="1"
+  max="180"
+  value="10">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Fin
+</label>
+
+<select id="timerAlert">
+
+<option value="alert">
+Signal
+</option>
+
+<option value="silent">
+Silencieux
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div
+  class="actions"
+  style="justify-content:center">
+
+<button onclick="timerStart()">
+Démarrer
+</button>
+
+<button
+  class="secondary"
+  onclick="timerPause()">
+Pause
+</button>
+
+<button
+  class="secondary"
+  onclick="timerReset()">
+Réinitialiser
+</button>
+
+</div>
+
+
+<p
+  id="timerStatus"
+  class="muted">
+Prêt.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CARTES
+     ===================================================== -->
+
+<section
+  id="cartes"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+LOCALISER
+</p>
+
+<h1>
+Cartes
+</h1>
+
+<p>
+Outils cartographiques externes et recherche de lieux.
+</p>
+
+</div>
+
+
+<div class="two">
+
+
+<div class="card map">
+
+<div class="map-bg">
+</div>
+
+<div class="map-content">
+
+<p class="eyebrow">
+CARTE
+</p>
+
+<h2>
+Espace cartographique
+</h2>
+
+<p class="muted">
+Vous pouvez remplacer cet espace par une carte
+intégrée ou une image dans le code.
+</p>
+
+<button onclick="openMap()">
+Ouvrir OpenStreetMap
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Recherche
+</h3>
+
+<div class="field">
+
+<input
+  id="place"
+  placeholder="Sahel, Paris, détroit de Malacca...">
+
+</div>
+
+<button onclick="searchPlace()">
+Rechercher
+</button>
+
+<hr>
+
+<a
+  class="resource"
+  href="https://www.openstreetmap.org/"
+  target="_blank"
+  rel="noopener">
+
+OpenStreetMap
+
+<br>
+
+<small>
+Cartographie libre
+</small>
+
+</a>
+
+<br>
+
+<a
+  class="resource"
+  href="https://www.geoportail.gouv.fr/"
+  target="_blank"
+  rel="noopener">
+
+Géoportail
+
+<br>
+
+<small>
+Cartographie et données
+</small>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     GROUPES
+     ===================================================== -->
+
+<section
+  id="groupes"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+COOPÉRER
+</p>
+
+<h1>
+Groupes & tirage
+</h1>
+
+<p>
+Une liste par ligne, puis choisissez la taille des groupes.
+</p>
+
+</div>
+
+
+<div class="two">
+
+
+<div class="card">
+
+<h3>
+Élèves
+</h3>
+
+<textarea
+  id="students"
+  rows="15"
+  placeholder="Un élève par ligne">
+</textarea>
+
+<br><br>
+
+<button onclick="saveStudents()">
+Enregistrer
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Répartition
+</h3>
+
+<div class="field">
+
+<label>
+Taille des groupes
+</label>
+
+<input
+  id="groupSize"
+  type="number"
+  min="2"
+  value="3">
+
+</div>
+
+
+<div class="actions">
+
+<button onclick="makeGroups()">
+Créer
+</button>
+
+<button
+  class="secondary"
+  onclick="drawStudent()">
+Tirer au sort
+</button>
+
+</div>
+
+
+<div
+  id="groupsResult"
+  class="result-list">
+</div>
+
+
+<div
+  id="drawResult"
+  style="font-size:34px;font-weight:800;text-align:center;padding:25px">
+?
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CONSIGNES
+     ===================================================== -->
+
+<section
+  id="consignes"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+PROJETER
+</p>
+
+<h1>
+Consigne
+</h1>
+
+<p>
+Créez une consigne lisible au tableau.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<textarea
+  id="instruction"
+  rows="7"
+  placeholder="Écrivez votre consigne...">
+</textarea>
+
+<br><br>
+
+<div class="actions">
+
+<button onclick="showInstruction()">
+Afficher
+</button>
+
+<button
+  class="secondary"
+  onclick="clearInstruction()">
+Effacer
+</button>
+
+</div>
+
+
+<div
+  id="projection"
+  class="projection">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RELECTURE
+     ===================================================== -->
+
+<section
+  id="relecture"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+PRODUCTION ÉCRITE
+</p>
+
+<h1>
+Relecture
+</h1>
+
+<p>
+Checklist personnalisable à compléter en classe.
+</p>
+
+</div>
+
+
+<div
+  class="card checklist"
+  id="checklist">
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     FRISE FACTORY
+     ===================================================== -->
+
+<section
+  id="frise"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+CHRONOLOGIE
+</p>
+
+<h1>
+Frise chronologique
+</h1>
+
+<p>
+Créez et consultez vos frises chronologiques avec Frise Factory.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div
+  class="actions"
+  style="margin-bottom:16px">
+
+<a
+  href="https://frisefactory.laclassedhistoire.fr/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="resource">
+
+Ouvrir Frise Factory dans un nouvel onglet ↗
+
+</a>
+
+</div>
+
+
+<div
+  style="
+    width:100%;
+    height:75vh;
+    min-height:550px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:14px;
+  ">
+
+<iframe
+  src="https://frisefactory.laclassedhistoire.fr/"
+  title="Frise Factory — création de frises chronologiques"
+  style="width:100%;height:100%;border:0"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+
+</div>
+
+
+<p
+  class="muted"
+  style="margin-top:12px">
+
+Si Frise Factory ne s'affiche pas dans cette fenêtre,
+utilisez le bouton pour l'ouvrir directement dans un nouvel onglet.
+
+</p>
+
+</div>
+
+
+<div class="page-title">
+
+<p class="eyebrow">
+CHRONOLOGIE
+</p>
+
+<h1>
+Repères personnels
+</h1>
+
+<p>
+Ajoutez vos propres repères.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="form-grid">
+
+<input
+  id="eventDate"
+  placeholder="Date / période">
+
+<input
+  id="eventTitle"
+  placeholder="Événement">
+
+</div>
+
+<br>
+
+<button onclick="addEvent()">
+Ajouter
+</button>
+
+<div
+  id="timeline"
+  class="timeline">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     NOUVEL OUTIL : SIÈCLE & MILLÉNAIRE
+     ===================================================== -->
+
+<section
+  id="siecle"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+CHRONOLOGIE
+</p>
+
+<h1>
+Siècle & millénaire
+</h1>
+
+<p>
+Trouve le siècle et le millénaire correspondant à une date.
+</p>
+
+</div>
+
+
+<div class="two century-tool">
+
+
+<div class="card">
+
+<p class="eyebrow">
+EXERCICE
+</p>
+
+<h2>
+À quel siècle appartient cette date ?
+</h2>
+
+<p class="muted">
+
+Entre une date comme
+<strong>1492</strong>,
+<strong>1789</strong>
+ou
+<strong>753 av. J.-C.</strong>.
+
+</p>
+
+
+<div class="field">
+
+<label for="historicalDate">
+Date
+</label>
+
+<input
+  id="historicalDate"
+  type="text"
+  placeholder="Ex. 1492 ou 753 av. J.-C."
+  autocomplete="off">
+
+</div>
+
+
+<div class="actions">
+
+<button onclick="calculateCentury()">
+Calculer
+</button>
+
+<button
+  class="secondary"
+  onclick="clearCentury()">
+Effacer
+</button>
+
+<button
+  class="secondary"
+  onclick="randomCenturyDate()">
+🎲 Nouvelle date
+</button>
+
+</div>
+
+
+<div id="centuryResult">
+</div>
+
+</div>
+
+
+<div class="card">
+
+<p class="eyebrow">
+MÉTHODE
+</p>
+
+<h2>
+Comment trouver le siècle ?
+</h2>
+
+<p>
+Un siècle correspond à une période de
+<strong>100 ans</strong>.
+</p>
+
+<div class="century-examples">
+
+<div class="century-example">
+<strong>1 à 100</strong>
+<br>
+Ier siècle
+</div>
+
+<div class="century-example">
+<strong>101 à 200</strong>
+<br>
+IIe siècle
+</div>
+
+<div class="century-example">
+<strong>401 à 500</strong>
+<br>
+Ve siècle
+</div>
+
+<div class="century-example">
+<strong>1401 à 1500</strong>
+<br>
+XVe siècle
+</div>
+
+</div>
+
+
+<div class="century-tip">
+
+<strong>Astuce :</strong>
+
+pour une date après J.-C.,
+
+on peut prendre les centaines et ajouter
+<strong>1</strong>,
+
+sauf lorsque la date se termine par
+<strong>00</strong>.
+
+<br><br>
+
+Exemple :
+
+<strong>1789</strong>
+
+→ 17 + 1
+
+→ <strong>XVIIIe siècle</strong>.
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RESSOURCES
+     ===================================================== -->
+
+<section
+  id="ressources"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+MES RESSOURCES
+</p>
+
+<h1>
+Ressources
+</h1>
+
+<p>
+Gérez vos liens depuis l’administration.
+</p>
+
+</div>
+
+<div
+  id="resourcesFull"
+  class="three">
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMINISTRATION
+     ===================================================== -->
+
+<section
+  id="admin"
+  class="view">
+
+<div class="page-title">
+
+<p class="eyebrow">
+PERSONNALISATION
+</p>
+
+<h1>
+Administration
+</h1>
+
+<p>
+Cette partie vous permet de modifier le contenu sans toucher au code.
+</p>
+
+</div>
+
+
+<div class="admin-tabs">
+
+<button
+  class="active"
+  onclick="adminTab('general',this)">
+Général
+</button>
+
+<button
+  onclick="adminTab('courses',this)">
+Cours
+</button>
+
+<button
+  onclick="adminTab('links',this)">
+Ressources
+</button>
+
+<button
+  onclick="adminTab('check',this)">
+Relecture
+</button>
+
+<button
+  onclick="adminTab('data',this)">
+Données
+</button>
+
+</div>
+
+
+<div
+  id="admin-general"
+  class="admin-panel card">
+
+<h3>
+Identité du site
+</h3>
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>
+Nom
+</label>
+
+<input
+  id="adminSiteName">
+
+</div>
+
+<div class="field">
+
+<label>
+Sous-titre
+</label>
+
+<input
+  id="adminSubtitle">
+
+</div>
+
+</div>
+
+<button onclick="saveGeneral()">
+Enregistrer
+</button>
+
+</div>
+
+
+<div
+  id="admin-courses"
+  class="admin-panel card"
+  style="display:none">
+
+<h3>
+Ajouter un cours
+</h3>
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>
+Matière
+</label>
+
+<select id="courseSubject">
+
+<option>
+Histoire
+</option>
+
+<option>
+Géographie
+</option>
+
+<option>
+EMC
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Niveau
+</label>
+
+<select id="courseLevel">
+
+<option>6e</option>
+<option>5e</option>
+<option>4e</option>
+<option>3e</option>
+<option>2de</option>
+<option>1re</option>
+<option>Terminale</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>
+Titre
+</label>
+
+<input
+  id="courseTitle"
+  placeholder="Ex. La Méditerranée antique">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Lien (facultatif)
+</label>
+
+<input
+  id="courseUrl"
+  placeholder="https://...">
+
+</div>
+
+</div>
+
+
+<button onclick="addCourse()">
+Ajouter le cours
+</button>
+
+<div id="courseAdminList">
+</div>
+
+</div>
+
+
+<div
+  id="admin-links"
+  class="admin-panel card"
+  style="display:none">
+
+<h3>
+Ajouter une ressource
+</h3>
+
+<div class="form-grid">
+
+<input
+  id="linkName"
+  placeholder="Nom">
+
+<input
+  id="linkUrl"
+  placeholder="https://...">
+
+</div>
+
+<br>
+
+<input
+  id="linkDesc"
+  placeholder="Description">
+
+<br><br>
+
+<button onclick="addLink()">
+Ajouter
+</button>
+
+<div id="linkAdminList">
+</div>
+
+</div>
+
+
+<div
+  id="admin-check"
+  class="admin-panel card"
+  style="display:none">
+
+<h3>
+Checklist
+</h3>
+
+<div
+  class="inline"
+  style="display:flex;gap:8px">
+
+<input
+  id="checkText"
+  placeholder="Nouvelle étape">
+
+<button onclick="addCheck()">
+Ajouter
+</button>
+
+</div>
+
+<div id="checkAdminList">
+</div>
+
+</div>
+
+
+<div
+  id="admin-data"
+  class="admin-panel card"
+  style="display:none">
+
+<h3>
+Sauvegarde
+</h3>
+
+<p class="muted">
+
+Exportez vos réglages pour les conserver
+ou les transférer sur un autre navigateur.
+
+</p>
+
+
+<div class="actions">
+
+<button onclick="exportData()">
+Exporter JSON
+</button>
+
+
+<label
+  class="secondary"
+  style="padding:10px 14px;border-radius:11px;font-weight:700;cursor:pointer">
+
+Importer
+
+<input
+  id="importData"
+  type="file"
+  accept=".json"
+  hidden
+  onchange="importDataFile(event)">
+
+</label>
+
+
+<button
+  class="danger"
+  onclick="resetData()">
+Réinitialiser
+</button>
+
+</div>
+
+</div>
+
+</section>
+
 
 </main>
+
 </div>
-<footer>Tableau de bord HG V3 · Base autonome et personnalisable</footer>
+
+
+<footer>
+Tableau de bord HG V4 · Base autonome et personnalisable
+</footer>
+
 
 <script>
-const DEFAULT={siteName:"Tableau de bord HG",subtitle:"Un espace central pour organiser vos cours, lancer vos outils et retrouver vos ressources.",courses:[],links:[{name:"Lumni",url:"https://www.lumni.fr/",desc:"Ressources pédagogiques"},{name:"OpenStreetMap",url:"https://www.openstreetmap.org/",desc:"Cartographie libre"},{name:"Géoportail",url:"https://www.geoportail.gouv.fr/",desc:"Cartographie et données"}],checks:["J’ai répondu précisément à la consigne.","J’ai organisé mes idées en paragraphes.","J’ai utilisé le vocabulaire attendu.","J’ai donné des exemples précis.","J’ai vérifié dates, lieux et noms propres.","J’ai relu l’orthographe et la ponctuation."],students:"",events:[]};
-let data=JSON.parse(localStorage.getItem("hgV2")||"null")||DEFAULT;
-const save=()=>localStorage.setItem("hgV2",JSON.stringify(data));
-function $(s){return document.querySelector(s)} function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function show(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));document.querySelectorAll("[data-show]").forEach(b=>b.classList.toggle("active",b.dataset.show===id));location.hash=id;window.scrollTo({top:0,behavior:"smooth"});if(id==="ressources")renderLinks("#resourcesFull");}
-document.addEventListener("click",e=>{const b=e.target.closest("[data-show]");if(b)show(b.dataset.show);const l=e.target.closest("[data-level]");if(l){show("histoire");renderLevel(l.dataset.level)}});
 
-function renderHome(){ $("#siteNameTop").textContent=data.siteName;$("#heroTitle").innerHTML=data.siteName.replace(/</g,"&lt;")+"<br>à portée de clic.";$("#heroSubtitle").textContent=data.subtitle;renderLinks("#homeResources",3);$("#adminSiteName").value=data.siteName;$("#adminSubtitle").value=data.subtitle;renderCourses();renderLinks("#linkAdminList");renderChecks();renderTimeline();$("#students").value=data.students||""}
-function renderLinks(sel,limit){const el=$(sel);if(!el)return;let arr=limit?data.links.slice(0,limit):data.links;el.innerHTML=arr.length?arr.map((x,i)=>`<a class="resource" href="${esc(x.url)}" target="_blank" rel="noopener"><strong>${esc(x.name)}</strong><br><small>${esc(x.desc||x.url)}</small></a>`).join(""):`<div class="empty">Aucune ressource.</div>`}
-function renderSubjects(){const levels=["6e","5e","4e","3e","2de","1re","Terminale"];["Histoire","Géographie"].forEach((s,idx)=>{const target=idx?"#geoLevels":"#historyLevels";let out="";levels.forEach(l=>{let cs=data.courses.filter(c=>c.subject===s&&c.level===l);out+=`<button class="tool" onclick="renderLevel('${l}')"><span class="ico">${idx?"🌍":"📚"}</span><strong>${l}</strong><small>${cs.length} cours · cliquer pour afficher</small></button>`});$(target).innerHTML=out});$("#emcContent").innerHTML=levels.map(l=>{let cs=data.courses.filter(c=>c.subject==="EMC"&&c.level===l);return `<button class="tool" onclick="renderLevel('${l}')"><span class="ico">⚖️</span><strong>${l}</strong><small>${cs.length} ressource(s)</small></button>`}).join("")}
-function renderLevel(level){
-  const all=data.courses.filter(c=>c.level===level);
-  const subjects=["Histoire","Géographie","EMC"];
-  let html=`<div class="page-title"><p class="eyebrow">NIVEAU</p><h1>${esc(level)}</h1><p>Cours enregistrés dans votre tableau de bord.</p><button class="secondary" onclick="show('histoire')">← Retour aux niveaux</button></div>`;
-  subjects.forEach(subject=>{
-    const courses=all.filter(c=>c.subject===subject);
-    html+=`<div class="section-head"><h2>${esc(subject)}</h2></div><div class="three">`;
-    html+=courses.length?courses.map(c=>`<div class="card"><p class="eyebrow">${esc(c.subject)}</p><h3>${esc(c.title)}</h3>${c.url?`<a href="${esc(c.url)}" target="_blank" rel="noopener">Ouvrir la ressource ↗</a>`:"<p class='muted'>Aucun lien associé.</p>"}</div>`).join(""):`<div class="empty">Aucun cours de ${esc(subject)} pour ce niveau.</div>`;
-    html+=`</div>`;
-  });
-  let temp=document.getElementById("levelTemp");
-  if(!temp){temp=document.createElement("section");temp.id="levelTemp";temp.className="view";$("main").appendChild(temp);}
-  temp.innerHTML=html;
-  show("levelTemp");
+/* =========================================================
+   DONNÉES
+   ========================================================= */
+
+const DEFAULT={
+  siteName:"Tableau de bord HG",
+
+  subtitle:
+    "Un espace central pour organiser vos cours, lancer vos outils et retrouver vos ressources.",
+
+  courses:[],
+
+  links:[
+    {
+      name:"Lumni",
+      url:"https://www.lumni.fr/",
+      desc:"Ressources pédagogiques"
+    },
+    {
+      name:"OpenStreetMap",
+      url:"https://www.openstreetmap.org/",
+      desc:"Cartographie libre"
+    },
+    {
+      name:"Géoportail",
+      url:"https://www.geoportail.gouv.fr/",
+      desc:"Cartographie et données"
+    }
+  ],
+
+  checks:[
+    "J’ai répondu précisément à la consigne.",
+    "J’ai organisé mes idées en paragraphes.",
+    "J’ai utilisé le vocabulaire attendu.",
+    "J’ai donné des exemples précis.",
+    "J’ai vérifié dates, lieux et noms propres.",
+    "J’ai relu l’orthographe et la ponctuation."
+  ],
+
+  students:"",
+
+  events:[]
+};
+
+
+let data=
+  JSON.parse(localStorage.getItem("hgV2")||"null")
+  || JSON.parse(JSON.stringify(DEFAULT));
+
+
+const save=() =>
+  localStorage.setItem("hgV2",JSON.stringify(data));
+
+
+function $(s){
+  return document.querySelector(s)
 }
-function renderCourses(){const el=$("#courseAdminList");if(!el)return;el.innerHTML=data.courses.length?data.courses.map((c,i)=>`<div class="list-item"><span><b>${esc(c.level)} · ${esc(c.subject)}</b><br>${esc(c.title)}</span><button class="danger" onclick="removeCourse(${i})">Supprimer</button></div>`).join(""):`<div class="empty">Aucun cours.</div>`}
-function addCourse(){let c={subject:$("#courseSubject").value,level:$("#courseLevel").value,title:$("#courseTitle").value.trim(),url:$("#courseUrl").value.trim()};if(!c.title)return alert("Indiquez un titre.");if(c.url&&!/^https?:\/\//i.test(c.url))c.url="https://"+c.url;data.courses.push(c);save();$("#courseTitle").value=$("#courseUrl").value="";renderCourses();renderSubjects()}
-function removeCourse(i){data.courses.splice(i,1);save();renderCourses();renderSubjects()}
-function addLink(){let name=$("#linkName").value.trim(),url=$("#linkUrl").value.trim(),desc=$("#linkDesc").value.trim();if(!name||!url)return alert("Nom et URL requis.");if(!/^https?:\/\//i.test(url))url="https://"+url;data.links.push({name,url,desc});save();$("#linkName").value=$("#linkUrl").value=$("#linkDesc").value="";renderLinks("#linkAdminList");renderLinks("#homeResources",3)}
-function renderLinksAdmin(){let el=$("#linkAdminList");if(el)el.innerHTML=data.links.map((x,i)=>`<div class="list-item"><span><b>${esc(x.name)}</b><br><span class="muted">${esc(x.url)}</span></span><button class="danger" onclick="removeLink(${i})">Supprimer</button></div>`).join("")}
-function removeLink(i){data.links.splice(i,1);save();renderLinksAdmin();renderLinks("#homeResources",3);renderLinks("#resourcesFull")}
-function renderChecks(){let el=$("#checklist");if(el)el.innerHTML=data.checks.map(x=>`<label class="check"><input type="checkbox"><span>${esc(x)}</span></label>`).join("");let a=$("#checkAdminList");if(a)a.innerHTML=data.checks.map((x,i)=>`<div class="list-item"><span>${esc(x)}</span><button class="danger" onclick="removeCheck(${i})">×</button></div>`).join("")}
-function addCheck(){let t=$("#checkText").value.trim();if(!t)return;data.checks.push(t);save();$("#checkText").value="";renderChecks()}function removeCheck(i){data.checks.splice(i,1);save();renderChecks()}
-function saveGeneral(){data.siteName=$("#adminSiteName").value.trim()||"Tableau de bord HG";data.subtitle=$("#adminSubtitle").value.trim();save();renderHome();alert("Identité enregistrée.")}
-function adminTab(name,btn){document.querySelectorAll(".admin-panel").forEach(p=>p.style.display="none");$("#admin-"+name).style.display="block";document.querySelectorAll(".admin-tabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");if(name==="links")renderLinksAdmin()}
-function saveStudents(){data.students=$("#students").value;save();alert("Liste enregistrée.")}
-function names(){return $("#students").value.split(/\n|,/).map(x=>x.trim()).filter(Boolean)}
-function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function makeGroups(){let a=shuffle(names()),n=Math.max(2,+$("#groupSize").value||3);if(!a.length)return alert("Ajoutez les élèves.");let h="";for(let i=0;i<a.length;i+=n)h+=`<div class="result"><b>Groupe ${i/n+1}</b><br>${a.slice(i,i+n).map(esc).join(" · ")}</div>`;$("#groupsResult").innerHTML=h}
-function drawStudent(){let a=names();if(!a.length)return alert("Ajoutez les élèves.");$("#drawResult").textContent=a[Math.floor(Math.random()*a.length)]}
-let timer={total:600,left:600,id:null};function timerRender(){$("#timerDisplay").textContent=`${String(Math.floor(timer.left/60)).padStart(2,"0")}:${String(timer.left%60).padStart(2,"0")}`;$("#timerBar").style.width=(timer.left/timer.total*100)+"%"}$("#timerMinutes").onchange=timerReset;function timerStart(){if(timer.id)return;timer.id=setInterval(()=>{timer.left--;timerRender();if(timer.left<=0){clearInterval(timer.id);timer.id=null;$("#timerStatus").textContent="Temps écoulé.";if($("#timerAlert").value==="alert")alert("Temps écoulé !")}},1000);$("#timerStatus").textContent="En cours…"}function timerPause(){clearInterval(timer.id);timer.id=null;$("#timerStatus").textContent="En pause."}function timerReset(){clearInterval(timer.id);timer.id=null;timer.total=Math.max(60,(+$("#timerMinutes").value||10)*60);timer.left=timer.total;$("#timerStatus").textContent="Prêt.";timerRender()}timerRender();
-function openMap(){window.open("https://www.openstreetmap.org/","_blank","noopener")}function searchPlace(){let q=$("#place").value.trim();if(q)window.open("https://www.openstreetmap.org/search?query="+encodeURIComponent(q),"_blank","noopener")}
-function showInstruction(){$("#projection").textContent=$("#instruction").value;$("#projection").style.display="block"}function clearInstruction(){$("#instruction").value="";$("#projection").textContent="";$("#projection").style.display="none"}
-function addEvent(){let date=$("#eventDate").value.trim(),title=$("#eventTitle").value.trim();if(!date||!title)return alert("Date et événement requis.");data.events.push({date,title});save();$("#eventDate").value=$("#eventTitle").value="";renderTimeline()}function renderTimeline(){let e=$("#timeline");if(!e)return;e.innerHTML=data.events.length?data.events.map((x,i)=>`<div class="event"><small>${esc(x.date)}</small><br><b>${esc(x.title)}</b><br><button onclick="removeEvent(${i})">Supprimer</button></div>`).join(""):`<span class="muted">Ajoutez des repères à votre frise.</span>`}function removeEvent(i){data.events.splice(i,1);save();renderTimeline()}
-function updateClock(){let d=new Date(),o={weekday:"long",day:"numeric",month:"long",year:"numeric"};$("#bigDate").textContent=d.toLocaleDateString("fr-FR",o);$("#bigTime").textContent=d.toLocaleTimeString("fr-FR");$("#homeDate").textContent=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}setInterval(updateClock,1000);updateClock();
-function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("hgDark",document.body.classList.contains("dark"))}if(localStorage.getItem("hgDark")==="true")document.body.classList.add("dark");
-function exportData(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="tableau-de-bord-hg.json";a.click()}
-async function importDataFile(e){try{data=JSON.parse(await e.target.files[0].text());save();renderHome();renderSubjects();alert("Import réussi.")}catch{alert("Fichier invalide.")}}
-function resetData(){if(confirm("Réinitialiser toutes les données ?")){data=JSON.parse(JSON.stringify(DEFAULT));save();renderHome();renderSubjects()}}
-renderHome();renderSubjects();show(location.hash.slice(1)||"accueil");
+
+
+function esc(s){
+
+  return String(s).replace(
+    /[&<>"']/g,
+    c=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[c])
+  );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function show(id){
+
+  document
+    .querySelectorAll(".view")
+    .forEach(v=>{
+      v.classList.toggle(
+        "active",
+        v.id===id
+      )
+    });
+
+
+  document
+    .querySelectorAll("[data-show]")
+    .forEach(b=>{
+      b.classList.toggle(
+        "active",
+        b.dataset.show===id
+      )
+    });
+
+
+  location.hash=id;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  if(id==="ressources"){
+    renderLinks("#resourcesFull");
+  }
+
+}
+
+
+document.addEventListener(
+  "click",
+  e=>{
+
+    const b=e.target.closest("[data-show]");
+
+    if(b){
+      show(b.dataset.show);
+    }
+
+
+    const l=e.target.closest("[data-level]");
+
+    if(l){
+
+      show("histoire");
+
+      renderLevel(
+        l.dataset.level
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ACCUEIL
+   ========================================================= */
+
+function renderHome(){
+
+  $("#siteNameTop").textContent=
+    data.siteName;
+
+
+  $("#heroTitle").innerHTML=
+    esc(data.siteName)+
+    "<br>à portée de clic.";
+
+
+  $("#heroSubtitle").textContent=
+    data.subtitle;
+
+
+  renderLinks(
+    "#homeResources",
+    3
+  );
+
+
+  $("#adminSiteName").value=
+    data.siteName;
+
+
+  $("#adminSubtitle").value=
+    data.subtitle;
+
+
+  renderCourses();
+
+  renderLinks(
+    "#linkAdminList"
+  );
+
+  renderChecks();
+
+  renderTimeline();
+
+  $("#students").value=
+    data.students||"";
+
+}
+
+
+function renderLinks(sel,limit){
+
+  const el=$(sel);
+
+  if(!el)return;
+
+
+  const arr=
+    limit
+      ? data.links.slice(0,limit)
+      : data.links;
+
+
+  el.innerHTML=
+    arr.length
+      ? arr.map(x=>`
+
+<a
+  class="resource"
+  href="${esc(x.url)}"
+  target="_blank"
+  rel="noopener">
+
+<strong>
+${esc(x.name)}
+</strong>
+
+<br>
+
+<small>
+${esc(x.desc||x.url)}
+</small>
+
+</a>
+
+`).join("")
+
+      : `<div class="empty">
+          Aucune ressource.
+        </div>`;
+
+}
+
+
+/* =========================================================
+   COURS
+   ========================================================= */
+
+function renderSubjects(){
+
+  const levels=[
+    "6e",
+    "5e",
+    "4e",
+    "3e",
+    "2de",
+    "1re",
+    "Terminale"
+  ];
+
+
+  ["Histoire","Géographie"]
+  .forEach(
+    (s,idx)=>{
+
+      const target=
+        idx
+          ? "#geoLevels"
+          : "#historyLevels";
+
+
+      let out="";
+
+
+      levels.forEach(
+        l=>{
+
+          const cs=
+            data.courses.filter(
+              c=>
+                c.subject===s &&
+                c.level===l
+            );
+
+
+          out+=`
+
+<button
+  class="tool"
+  onclick="renderLevel('${l}')">
+
+<span class="ico">
+${idx?"🌍":"📚"}
+</span>
+
+<strong>
+${l}
+</strong>
+
+<small>
+${cs.length} cours · cliquer pour afficher
+</small>
+
+</button>
+
+`;
+
+        }
+      );
+
+
+      $(target).innerHTML=out;
+
+    }
+  );
+
+
+  $("#emcContent").innerHTML=
+    levels.map(
+      l=>{
+
+        let cs=
+          data.courses.filter(
+            c=>
+              c.subject==="EMC" &&
+              c.level===l
+          );
+
+
+        return `
+
+<button
+  class="tool"
+  onclick="renderLevel('${l}')">
+
+<span class="ico">
+⚖️
+</span>
+
+<strong>
+${l}
+</strong>
+
+<small>
+${cs.length} ressource(s)
+</small>
+
+</button>
+
+`;
+
+      }
+    ).join("");
+
+}
+
+
+function renderLevel(level){
+
+  const all=
+    data.courses.filter(
+      c=>c.level===level
+    );
+
+
+  const subjects=[
+    "Histoire",
+    "Géographie",
+    "EMC"
+  ];
+
+
+  let html=`
+
+<div class="page-title">
+
+<p class="eyebrow">
+NIVEAU
+</p>
+
+<h1>
+${esc(level)}
+</h1>
+
+<p>
+Cours enregistrés dans votre tableau de bord.
+</p>
+
+<button
+  class="secondary"
+  onclick="show('histoire')">
+
+← Retour aux niveaux
+
+</button>
+
+</div>
+
+`;
+
+
+  subjects.forEach(
+    subject=>{
+
+      const courses=
+        all.filter(
+          c=>c.subject===subject
+        );
+
+
+      html+=`
+
+<div class="section-head">
+
+<h2>
+${esc(subject)}
+</h2>
+
+</div>
+
+<div class="three">
+
+`;
+
+
+      html+=
+        courses.length
+
+        ? courses.map(
+            c=>`
+
+<div class="card">
+
+<p class="eyebrow">
+${esc(c.subject)}
+</p>
+
+<h3>
+${esc(c.title)}
+</h3>
+
+${
+  c.url
+
+  ? `<a
+       href="${esc(c.url)}"
+       target="_blank"
+       rel="noopener">
+       Ouvrir la ressource ↗
+     </a>`
+
+  : `<p class="muted">
+       Aucun lien associé.
+     </p>`
+}
+
+</div>
+
+`
+          ).join("")
+
+        : `<div class="empty">
+             Aucun cours de ${esc(subject)}
+             pour ce niveau.
+           </div>`;
+
+
+      html+=`
+</div>
+`;
+
+    }
+  );
+
+
+  let temp=
+    document.getElementById(
+      "levelTemp"
+    );
+
+
+  if(!temp){
+
+    temp=
+      document.createElement(
+        "section"
+      );
+
+    temp.id=
+      "levelTemp";
+
+    temp.className=
+      "view";
+
+    $("main").appendChild(
+      temp
+    );
+
+  }
+
+
+  temp.innerHTML=html;
+
+  show("levelTemp");
+
+}
+
+
+function renderCourses(){
+
+  const el=
+    $("#courseAdminList");
+
+  if(!el)return;
+
+
+  el.innerHTML=
+    data.courses.length
+
+      ? data.courses.map(
+          (c,i)=>`
+
+<div class="list-item">
+
+<span>
+
+<b>
+${esc(c.level)} · ${esc(c.subject)}
+</b>
+
+<br>
+
+${esc(c.title)}
+
+</span>
+
+<button
+  class="danger"
+  onclick="removeCourse(${i})">
+
+Supprimer
+
+</button>
+
+</div>
+
+`
+        ).join("")
+
+      : `<div class="empty">
+           Aucun cours.
+         </div>`;
+
+}
+
+
+function addCourse(){
+
+  let c={
+    subject:
+      $("#courseSubject").value,
+
+    level:
+      $("#courseLevel").value,
+
+    title:
+      $("#courseTitle").value.trim(),
+
+    url:
+      $("#courseUrl").value.trim()
+  };
+
+
+  if(!c.title){
+
+    alert(
+      "Indiquez un titre."
+    );
+
+    return;
+  }
+
+
+  if(
+    c.url &&
+    !/^https?:\/\//i.test(c.url)
+  ){
+
+    c.url=
+      "https://"+c.url;
+
+  }
+
+
+  data.courses.push(c);
+
+  save();
+
+
+  $("#courseTitle").value="";
+  $("#courseUrl").value="";
+
+
+  renderCourses();
+
+  renderSubjects();
+
+}
+
+
+function removeCourse(i){
+
+  data.courses.splice(i,1);
+
+  save();
+
+  renderCourses();
+
+  renderSubjects();
+
+}
+
+
+/* =========================================================
+   RESSOURCES
+   ========================================================= */
+
+function addLink(){
+
+  let name=
+    $("#linkName").value.trim();
+
+  let url=
+    $("#linkUrl").value.trim();
+
+  let desc=
+    $("#linkDesc").value.trim();
+
+
+  if(!name||!url){
+
+    alert(
+      "Nom et URL requis."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !/^https?:\/\//i.test(url)
+  ){
+
+    url=
+      "https://"+url;
+
+  }
+
+
+  data.links.push({
+    name,
+    url,
+    desc
+  });
+
+
+  save();
+
+
+  $("#linkName").value="";
+  $("#linkUrl").value="";
+  $("#linkDesc").value="";
+
+
+  renderLinks(
+    "#linkAdminList"
+  );
+
+  renderLinks(
+    "#homeResources",
+    3
+  );
+
+}
+
+
+function renderLinksAdmin(){
+
+  let el=
+    $("#linkAdminList");
+
+  if(!el)return;
+
+
+  el.innerHTML=
+    data.links.map(
+      (x,i)=>`
+
+<div class="list-item">
+
+<span>
+
+<b>
+${esc(x.name)}
+</b>
+
+<br>
+
+<span class="muted">
+${esc(x.url)}
+</span>
+
+</span>
+
+<button
+  class="danger"
+  onclick="removeLink(${i})">
+
+Supprimer
+
+</button>
+
+</div>
+
+`
+    ).join("");
+
+}
+
+
+function removeLink(i){
+
+  data.links.splice(i,1);
+
+  save();
+
+  renderLinksAdmin();
+
+  renderLinks(
+    "#homeResources",
+    3
+  );
+
+  renderLinks(
+    "#resourcesFull"
+  );
+
+}
+
+
+/* =========================================================
+   RELECTURE
+   ========================================================= */
+
+function renderChecks(){
+
+  let el=
+    $("#checklist");
+
+  if(el){
+
+    el.innerHTML=
+      data.checks.map(
+        x=>`
+
+<label class="check">
+
+<input type="checkbox">
+
+<span>
+${esc(x)}
+</span>
+
+</label>
+
+`
+      ).join("");
+
+  }
+
+
+  let a=
+    $("#checkAdminList");
+
+
+  if(a){
+
+    a.innerHTML=
+      data.checks.map(
+        (x,i)=>`
+
+<div class="list-item">
+
+<span>
+${esc(x)}
+</span>
+
+<button
+  class="danger"
+  onclick="removeCheck(${i})">
+
+×
+
+</button>
+
+</div>
+
+`
+      ).join("");
+
+  }
+
+}
+
+
+function addCheck(){
+
+  let t=
+    $("#checkText")
+      .value
+      .trim();
+
+
+  if(!t)return;
+
+
+  data.checks.push(t);
+
+  save();
+
+
+  $("#checkText").value="";
+
+  renderChecks();
+
+}
+
+
+function removeCheck(i){
+
+  data.checks.splice(i,1);
+
+  save();
+
+  renderChecks();
+
+}
+
+
+/* =========================================================
+   ADMINISTRATION
+   ========================================================= */
+
+function saveGeneral(){
+
+  data.siteName=
+    $("#adminSiteName")
+      .value
+      .trim()
+    ||"Tableau de bord HG";
+
+
+  data.subtitle=
+    $("#adminSubtitle")
+      .value
+      .trim();
+
+
+  save();
+
+  renderHome();
+
+  alert(
+    "Identité enregistrée."
+  );
+
+}
+
+
+function adminTab(name,btn){
+
+  document
+    .querySelectorAll(".admin-panel")
+    .forEach(
+      p=>p.style.display="none"
+    );
+
+
+  $("#admin-"+name)
+    .style.display="block";
+
+
+  document
+    .querySelectorAll(".admin-tabs button")
+    .forEach(
+      b=>b.classList.remove("active")
+    );
+
+
+  btn.classList.add("active");
+
+
+  if(name==="links"){
+    renderLinksAdmin();
+  }
+
+}
+
+
+/* =========================================================
+   GROUPES
+   ========================================================= */
+
+function saveStudents(){
+
+  data.students=
+    $("#students").value;
+
+  save();
+
+  alert(
+    "Liste enregistrée."
+  );
+
+}
+
+
+function names(){
+
+  return $("#students")
+    .value
+    .split(/\n|,/)
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+}
+
+
+function shuffle(a){
+
+  for(
+    let i=a.length-1;
+    i>0;
+    i--
+  ){
+
+    let j=
+      Math.floor(
+        Math.random()*(i+1)
+      );
+
+
+    [
+      a[i],
+      a[j]
+    ]=[
+      a[j],
+      a[i]
+    ];
+
+  }
+
+  return a;
+
+}
+
+
+function makeGroups(){
+
+  let a=
+    shuffle(names());
+
+
+  let n=
+    Math.max(
+      2,
+      +$("#groupSize").value||3
+    );
+
+
+  if(!a.length){
+
+    alert(
+      "Ajoutez les élèves."
+    );
+
+    return;
+
+  }
+
+
+  let h="";
+
+
+  for(
+    let i=0;
+    i<a.length;
+    i+=n
+  ){
+
+    h+=`
+
+<div class="result">
+
+<b>
+Groupe ${i/n+1}
+</b>
+
+<br>
+
+${a.slice(i,i+n)
+  .map(esc)
+  .join(" · ")}
+
+</div>
+
+`;
+
+  }
+
+
+  $("#groupsResult")
+    .innerHTML=h;
+
+}
+
+
+function drawStudent(){
+
+  let a=
+    names();
+
+
+  if(!a.length){
+
+    alert(
+      "Ajoutez les élèves."
+    );
+
+    return;
+
+  }
+
+
+  $("#drawResult")
+    .textContent=
+      a[
+        Math.floor(
+          Math.random()*a.length
+        )
+      ];
+
+}
+
+
+/* =========================================================
+   MINUTEUR
+   ========================================================= */
+
+let timer={
+  total:600,
+  left:600,
+  id:null
+};
+
+
+function timerRender(){
+
+  $("#timerDisplay")
+    .textContent=
+      `${String(
+        Math.floor(timer.left/60)
+      ).padStart(2,"0")}:${String(
+        timer.left%60
+      ).padStart(2,"0")}`;
+
+
+  $("#timerBar")
+    .style.width=
+      (timer.left/timer.total*100)+"%";
+
+}
+
+
+$("#timerMinutes").onchange=
+  timerReset;
+
+
+function timerStart(){
+
+  if(timer.id)return;
+
+
+  timer.id=
+    setInterval(
+      ()=>{
+
+        timer.left--;
+
+        timerRender();
+
+
+        if(timer.left<=0){
+
+          clearInterval(
+            timer.id
+          );
+
+          timer.id=null;
+
+
+          $("#timerStatus")
+            .textContent=
+              "Temps écoulé.";
+
+
+          if(
+            $("#timerAlert").value===
+            "alert"
+          ){
+
+            alert(
+              "Temps écoulé !"
+            );
+
+          }
+
+        }
+
+      },
+      1000
+    );
+
+
+  $("#timerStatus")
+    .textContent=
+      "En cours…";
+
+}
+
+
+function timerPause(){
+
+  clearInterval(
+    timer.id
+  );
+
+  timer.id=null;
+
+
+  $("#timerStatus")
+    .textContent=
+      "En pause.";
+
+}
+
+
+function timerReset(){
+
+  clearInterval(
+    timer.id
+  );
+
+  timer.id=null;
+
+
+  timer.total=
+    Math.max(
+      60,
+      (+$("#timerMinutes").value||10)*60
+    );
+
+
+  timer.left=
+    timer.total;
+
+
+  $("#timerStatus")
+    .textContent=
+      "Prêt.";
+
+
+  timerRender();
+
+}
+
+
+timerRender();
+
+
+/* =========================================================
+   CARTES
+   ========================================================= */
+
+function openMap(){
+
+  window.open(
+    "https://www.openstreetmap.org/",
+    "_blank",
+    "noopener"
+  );
+
+}
+
+
+function searchPlace(){
+
+  let q=
+    $("#place")
+      .value
+      .trim();
+
+
+  if(q){
+
+    window.open(
+      "https://www.openstreetmap.org/search?query="+
+      encodeURIComponent(q),
+      "_blank",
+      "noopener"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   CONSIGNES
+   ========================================================= */
+
+function showInstruction(){
+
+  $("#projection")
+    .textContent=
+      $("#instruction")
+        .value;
+
+
+  $("#projection")
+    .style.display=
+      "block";
+
+}
+
+
+function clearInstruction(){
+
+  $("#instruction")
+    .value="";
+
+
+  $("#projection")
+    .textContent="";
+
+
+  $("#projection")
+    .style.display=
+      "none";
+
+}
+
+
+/* =========================================================
+   FRISE
+   ========================================================= */
+
+function addEvent(){
+
+  let date=
+    $("#eventDate")
+      .value
+      .trim();
+
+
+  let title=
+    $("#eventTitle")
+      .value
+      .trim();
+
+
+  if(!date||!title){
+
+    alert(
+      "Date et événement requis."
+    );
+
+    return;
+
+  }
+
+
+  data.events.push({
+    date,
+    title
+  });
+
+
+  save();
+
+
+  $("#eventDate").value="";
+  $("#eventTitle").value="";
+
+
+  renderTimeline();
+
+}
+
+
+function renderTimeline(){
+
+  let e=
+    $("#timeline");
+
+
+  if(!e)return;
+
+
+  e.innerHTML=
+    data.events.length
+
+      ? data.events.map(
+          (x,i)=>`
+
+<div class="event">
+
+<small>
+${esc(x.date)}
+</small>
+
+<br>
+
+<b>
+${esc(x.title)}
+</b>
+
+<br>
+
+<button
+  onclick="removeEvent(${i})">
+
+Supprimer
+
+</button>
+
+</div>
+
+`
+        ).join("")
+
+      : `<span class="muted">
+           Ajoutez des repères à votre frise.
+         </span>`;
+
+}
+
+
+function removeEvent(i){
+
+  data.events.splice(i,1);
+
+  save();
+
+  renderTimeline();
+
+}
+
+
+/* =========================================================
+   OUTIL SIÈCLE & MILLÉNAIRE
+   ========================================================= */
+
+function parseHistoricalDate(value){
+
+  value=
+    String(value)
+      .trim()
+      .toLowerCase();
+
+
+  if(!value)return null;
+
+
+  const isBC=
+    value.includes("av") ||
+    value.includes("avant") ||
+    value.includes("j.-c") ||
+    value.includes("j.c");
+
+
+  let cleaned=
+    value
+      .replace(
+        /avant\s*j[.-]?\s*c\.?/gi,
+        ""
+      )
+      .replace(
+        /av\.?\s*j[.-]?\s*c\.?/gi,
+        ""
+      )
+      .replace(
+        /av\.?\s*j\.?\s*c\.?/gi,
+        ""
+      )
+      .replace(
+        /av\.?\s*j\.?c\.?/gi,
+        ""
+      )
+      .replace(
+        /[^0-9]/g,
+        ""
+      );
+
+
+  if(!cleaned)return null;
+
+
+  const year=
+    parseInt(
+      cleaned,
+      10
+    );
+
+
+  if(
+    !Number.isFinite(year) ||
+    year<=0
+  ){
+
+    return null;
+
+  }
+
+
+  return {
+    year,
+    isBC
+  };
+
+}
+
+
+function roman(number){
+
+  const values=[
+    [1000,"M"],
+    [900,"CM"],
+    [500,"D"],
+    [400,"CD"],
+    [100,"C"],
+    [90,"XC"],
+    [50,"L"],
+    [40,"XL"],
+    [10,"X"],
+    [9,"IX"],
+    [5,"V"],
+    [4,"IV"],
+    [1,"I"]
+  ];
+
+
+  let result="";
+
+
+  for(
+    const [value,symbol]
+    of values
+  ){
+
+    while(number>=value){
+
+      result+=symbol;
+
+      number-=value;
+
+    }
+
+  }
+
+
+  return result;
+
+}
+
+
+function ordinalCentury(number){
+
+  const r=
+    roman(number);
+
+
+  if(number===1){
+
+    return "Ier siècle";
+
+  }
+
+
+  return r+"e siècle";
+
+}
+
+
+function ordinalMillennium(number){
+
+  const r=
+    roman(number);
+
+
+  if(number===1){
+
+    return "Ier millénaire";
+
+  }
+
+
+  return r+"e millénaire";
+
+}
+
+
+function calculateCentury(){
+
+  const input=
+    document.getElementById(
+      "historicalDate"
+    );
+
+
+  const result=
+    document.getElementById(
+      "centuryResult"
+    );
+
+
+  const parsed=
+    parseHistoricalDate(
+      input.value
+    );
+
+
+  if(!parsed){
+
+    result.innerHTML=`
+
+<div class="empty">
+
+Entre une date valide, par exemple
+<strong>1492</strong>
+ou
+<strong>753 av. J.-C.</strong>.
+
+</div>
+
+`;
+
+    return;
+
+  }
+
+
+  const year=
+    parsed.year;
+
+  const isBC=
+    parsed.isBC;
+
+
+  /*
+   * Pour les années av. J.-C.,
+   * le découpage est inversé :
+   *
+   * 1 à 100 av. J.-C.
+   * = Ier siècle av. J.-C.
+   *
+   * 101 à 200 av. J.-C.
+   * = IIe siècle av. J.-C.
+   */
+
+
+  const century=
+    Math.floor(
+      (year-1)/100
+    )+1;
+
+
+  const millennium=
+    Math.floor(
+      (year-1)/1000
+    )+1;
+
+
+  const centuryText=
+    ordinalCentury(
+      century
+    );
+
+
+  const millenniumText=
+    ordinalMillennium(
+      millennium
+    );
+
+
+  let explanation="";
+
+
+  if(isBC){
+
+    const endCentury=
+      (century-1)*100+1;
+
+
+    const startCentury=
+      century*100;
+
+
+    const endMillennium=
+      (millennium-1)*1000+1;
+
+
+    const startMillennium=
+      millennium*1000;
+
+
+    explanation=`
+
+<p>
+
+Le
+<strong>${centuryText} av. J.-C.</strong>
+correspond aux années
+<strong>${startCentury} à ${endCentury} av. J.-C.</strong>.
+
+</p>
+
+
+<p>
+
+Le
+<strong>${millenniumText} av. J.-C.</strong>
+correspond aux années
+<strong>${startMillennium} à ${endMillennium} av. J.-C.</strong>.
+
+</p>
+
+`;
+
+  }else{
+
+    const startCentury=
+      (century-1)*100+1;
+
+
+    const endCentury=
+      century*100;
+
+
+    const startMillennium=
+      (millennium-1)*1000+1;
+
+
+    const endMillennium=
+      millennium*1000;
+
+
+    explanation=`
+
+<p>
+
+Le
+<strong>${centuryText}</strong>
+correspond aux années
+<strong>${startCentury} à ${endCentury}</strong>.
+
+</p>
+
+
+<p>
+
+Le
+<strong>${millenniumText}</strong>
+correspond aux années
+<strong>${startMillennium} à ${endMillennium}</strong>.
+
+</p>
+
+`;
+
+  }
+
+
+  const era=
+    isBC
+      ? "av. J.-C."
+      : "apr. J.-C.";
+
+
+  result.innerHTML=`
+
+<div class="century-result">
+
+<p class="eyebrow">
+RÉSULTAT
+</p>
+
+
+<div class="main-result">
+
+${centuryText}
+
+${isBC?" av. J.-C.":""}
+
+</div>
+
+
+<div class="secondary-result">
+
+${millenniumText}
+
+${isBC?" av. J.-C.":""}
+
+</div>
+
+</div>
+
+
+<div class="century-explanation">
+
+<p class="eyebrow">
+POUR COMPRENDRE
+</p>
+
+${explanation}
+
+</div>
+
+`;
+
+}
+
+
+function clearCentury(){
+
+  $("#historicalDate")
+    .value="";
+
+
+  $("#centuryResult")
+    .innerHTML="";
+
+
+  $("#historicalDate")
+    .focus();
+
+}
+
+
+function randomCenturyDate(){
+
+  const dates=[
+
+    "52",
+
+    "476",
+
+    "753 av. J.-C.",
+
+    "27 av. J.-C.",
+
+    "1492",
+
+    "1789",
+
+    "1804",
+
+    "1914",
+
+    "1918",
+
+    "1945",
+
+    "2001",
+
+    "622",
+
+    "1214",
+
+    "1453",
+
+    "1648",
+
+    "509 av. J.-C.",
+
+    "44 av. J.-C.",
+
+    "1000",
+
+    "1001",
+
+    "2000",
+
+    "2001"
+
+  ];
+
+
+  const date=
+    dates[
+      Math.floor(
+        Math.random()*
+        dates.length
+      )
+    ];
+
+
+  $("#historicalDate")
+    .value=date;
+
+
+  calculateCentury();
+
+}
+
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      event.key==="Enter" &&
+      document.activeElement &&
+      document.activeElement.id===
+      "historicalDate"
+    ){
+
+      calculateCentury();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   HORLOGE
+   ========================================================= */
+
+function updateClock(){
+
+  let d=
+    new Date();
+
+
+  let o={
+    weekday:"long",
+    day:"numeric",
+    month:"long",
+    year:"numeric"
+  };
+
+
+  $("#bigDate")
+    .textContent=
+      d.toLocaleDateString(
+        "fr-FR",
+        o
+      );
+
+
+  $("#bigTime")
+    .textContent=
+      d.toLocaleTimeString(
+        "fr-FR"
+      );
+
+
+  $("#homeDate")
+    .textContent=
+      d.toLocaleDateString(
+        "fr-FR",
+        {
+          weekday:"long",
+          day:"numeric",
+          month:"long"
+        }
+      );
+
+}
+
+
+setInterval(
+  updateClock,
+  1000
+);
+
+updateClock();
+
+
+/* =========================================================
+   THÈME
+   ========================================================= */
+
+function toggleTheme(){
+
+  document.body
+    .classList
+    .toggle("dark");
+
+
+  localStorage.setItem(
+    "hgDark",
+    document.body.classList.contains(
+      "dark"
+    )
+  );
+
+}
+
+
+if(
+  localStorage.getItem("hgDark")===
+  "true"
+){
+
+  document.body
+    .classList
+    .add("dark");
+
+}
+
+
+/* =========================================================
+   DONNÉES
+   ========================================================= */
+
+function exportData(){
+
+  let a=
+    document.createElement("a");
+
+
+  a.href=
+    URL.createObjectURL(
+      new Blob(
+        [
+          JSON.stringify(
+            data,
+            null,
+            2
+          )
+        ],
+        {
+          type:"application/json"
+        }
+      )
+    );
+
+
+  a.download=
+    "tableau-de-bord-hg.json";
+
+
+  a.click();
+
+}
+
+
+async function importDataFile(e){
+
+  try{
+
+    data=
+      JSON.parse(
+        await e.target.files[0].text()
+      );
+
+
+    save();
+
+    renderHome();
+
+    renderSubjects();
+
+
+    alert(
+      "Import réussi."
+    );
+
+  }catch{
+
+    alert(
+      "Fichier invalide."
+    );
+
+  }
+
+}
+
+
+function resetData(){
+
+  if(
+    confirm(
+      "Réinitialiser toutes les données ?"
+    )
+  ){
+
+    data=
+      JSON.parse(
+        JSON.stringify(
+          DEFAULT
+        )
+      );
+
+
+    save();
+
+    renderHome();
+
+    renderSubjects();
+
+  }
+
+}
+
+
+/* =========================================================
+   INITIALISATION
+   ========================================================= */
+
+renderHome();
+
+renderSubjects();
+
+show(
+  location.hash.slice(1)
+  ||"accueil"
+);
+
 </script>
 
-<!-- V3 ADMIN OVERLAY -->
-<div id="v3-admin-panel" class="v3-hidden">
-  <div class="v3-card">
-    <div class="v3-row" style="justify-content:space-between">
-      <div><span class="v3-badge">V3</span> <strong>Administration avancée</strong></div>
-      <button class="v3-btn secondary" onclick="v3CloseAdmin()">Fermer</button>
-    </div>
-    <div id="v3-admin-body" style="margin-top:16px"></div>
-  </div>
+
+<!-- =====================================================
+     ADMINISTRATION V3 AVANCÉE
+     ===================================================== -->
+
+<div
+  id="v3-admin-panel"
+  class="v3-hidden">
+
+<div class="v3-card">
+
+<div
+  class="v3-row"
+  style="justify-content:space-between">
+
+<div>
+
+<span class="v3-badge">
+V4
+</span>
+
+<strong>
+Administration avancée
+</strong>
+
+</div>
+
+
+<button
+  class="v3-btn secondary"
+  onclick="v3CloseAdmin()">
+
+Fermer
+
+</button>
+
+</div>
+
+
+<div
+  id="v3-admin-body"
+  style="margin-top:16px">
+</div>
+
+</div>
+
 </div>
 
 
 <script id="v3-js">
+
 (() => {
-  const KEY='tableauHG_v3_settings';
-  const DATA='tableauHG_v3_data';
-  const defaults={
-    siteTitle:'Tableau de bord HG',
-    subtitle:'Histoire • Géographie • EMC',
-    teacher:'Morgan Loton',
-    school:'',
-    primary:'#2563eb',
-    studentMode:false,
-    adminPassword:'',
-    homeTitle:'Tableau de bord HG',
-    homeText:'Un espace simple, clair et pratique pour préparer et conduire les séances.',
-  };
-  const defaultData={courses:[],resources:[],announcements:[]};
 
-  const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
-  let S=Object.assign({},defaults,load(KEY,{}));
-  let D=Object.assign({},defaultData,load(DATA,{}));
-  const save=()=>{localStorage.setItem(KEY,JSON.stringify(S));localStorage.setItem(DATA,JSON.stringify(D));};
-  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const KEY=
+  'tableauHG_v3_settings';
 
-  window.v3OpenAdmin=()=>{ 
-    const panel=document.getElementById('v3-admin-panel');
-    panel.classList.remove('v3-hidden'); v3Render();
-  };
-  window.v3CloseAdmin=()=>document.getElementById('v3-admin-panel').classList.add('v3-hidden');
 
-  function v3Render(){
-    const b=document.getElementById('v3-admin-body');
-    b.innerHTML=`
-      <div class="v3-admin-grid">
-        <section class="v3-card">
-          <h3>Identité du site</h3>
-          <label>Nom du site<input class="v3-input" id="v3-title" value="${esc(S.siteTitle)}"></label><br>
-          <label>Sous-titre<input class="v3-input" id="v3-sub" value="${esc(S.subtitle)}"></label><br>
-          <label>Enseignant<input class="v3-input" id="v3-teacher" value="${esc(S.teacher)}"></label><br>
-          <label>Établissement<input class="v3-input" id="v3-school" value="${esc(S.school)}"></label><br>
-          <label>Couleur principale <input class="v3-color" type="color" id="v3-color" value="${esc(S.primary)}"></label>
-          <div class="v3-row" style="margin-top:12px"><button class="v3-btn primary" onclick="v3SaveIdentity()">Enregistrer</button></div>
-        </section>
-        <section class="v3-card">
-          <h3>Accueil</h3>
-          <label>Titre<input class="v3-input" id="v3-home-title" value="${esc(S.homeTitle)}"></label><br>
-          <label>Texte d'accueil<textarea class="v3-textarea" id="v3-home-text">${esc(S.homeText)}</textarea></label>
-          <button class="v3-btn primary" onclick="v3SaveHome()">Enregistrer</button>
-        </section>
-        <section class="v3-card">
-          <h3>Mode élève</h3>
-          <p>Masque les commandes d'administration sur l'appareil utilisé en classe.</p>
-          <label><input type="checkbox" id="v3-student" ${S.studentMode?'checked':''}> Activer le mode élève</label>
-          <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3SaveStudent()">Appliquer</button></div>
-        </section>
-        <section class="v3-card">
-          <h3>Mot de passe local</h3>
-          <p class="v3-small">Protection de l'interface d'administration sur cet appareil. Ce n'est pas une sécurité serveur.</p>
-          <input class="v3-input" type="password" id="v3-pass" placeholder="Laisser vide pour désactiver">
-          <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3SavePassword()">Enregistrer</button></div>
-        </section>
-      </div>
+const DATA=
+  'tableauHG_v3_data';
 
-      <div class="v3-card" style="margin-top:14px">
-        <h3>Cours</h3>
-        <div class="v3-admin-grid">
-          <input class="v3-input" id="c-title" placeholder="Titre du cours">
-          <select class="v3-select" id="c-subject"><option>Histoire</option><option>Géographie</option><option>EMC</option></select>
-          <select class="v3-select" id="c-level"><option>6e</option><option>5e</option><option>4e</option><option>3e</option></select>
-          <input class="v3-input" id="c-url" placeholder="Lien (optionnel)">
-        </div>
-        <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3AddCourse()">+ Ajouter le cours</button></div>
-        <div id="v3-courses" style="margin-top:12px"></div>
-      </div>
 
-      <div class="v3-card" style="margin-top:14px">
-        <h3>Ressources</h3>
-        <div class="v3-admin-grid">
-          <input class="v3-input" id="r-name" placeholder="Nom de la ressource">
-          <input class="v3-input" id="r-url" placeholder="URL">
-          <input class="v3-input" id="r-desc" placeholder="Description">
-        </div>
-        <div style="margin-top:10px"><button class="v3-btn primary" onclick="v3AddResource()">+ Ajouter la ressource</button></div>
-        <div id="v3-resources" style="margin-top:12px"></div>
-      </div>
+const defaults={
 
-      <div class="v3-card" style="margin-top:14px">
-        <h3>Aperçu</h3>
-        <div class="v3-preview"><div class="v3-kpi">${esc(S.siteTitle)}</div><div>${esc(S.subtitle)}</div><div class="v3-small">${esc(S.teacher)} ${S.school?'• '+esc(S.school):''}</div></div>
-      </div>
+  siteTitle:
+    'Tableau de bord HG',
 
-      <div class="v3-card" style="margin-top:14px">
-        <h3>Données</h3>
-        <div class="v3-row">
-          <button class="v3-btn secondary" onclick="v3Export()">Exporter</button>
-          <button class="v3-btn secondary" onclick="document.getElementById('v3-import').click()">Importer</button>
-          <input id="v3-import" type="file" accept=".json" class="v3-hidden" onchange="v3Import(this)">
-          <button class="v3-btn danger" onclick="v3Reset()">Réinitialiser V3</button>
-        </div>
-      </div>`;
-    v3RenderLists();
+  subtitle:
+    'Histoire • Géographie • EMC',
+
+  teacher:
+    'Morgan Loton',
+
+  school:
+    '',
+
+  primary:
+    '#2563eb',
+
+  studentMode:
+    false,
+
+  adminPassword:
+    '',
+
+  homeTitle:
+    'Tableau de bord HG',
+
+  homeText:
+    'Un espace simple, clair et pratique pour préparer et conduire les séances.'
+
+};
+
+
+const defaultData={
+
+  courses:[],
+
+  resources:[],
+
+  announcements:[]
+
+};
+
+
+const load=(k,d)=>{
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(k)
+    )??d;
+
+  }catch(e){
+
+    return d;
+
   }
 
-  function v3RenderLists(){
-    const c=document.getElementById('v3-courses');
-    c.innerHTML=D.courses.length?`<table class="v3-table"><tr><th>Titre</th><th>Matière</th><th>Niveau</th><th></th></tr>`+
-      D.courses.map((x,i)=>`<tr><td>${esc(x.title)}</td><td>${esc(x.subject)}</td><td>${esc(x.level)}</td><td><button class="v3-btn danger" onclick="v3DeleteCourse(${i})">Supprimer</button></td></tr>`).join('')+'</table>':'<span class="v3-small">Aucun cours ajouté.</span>';
-    const r=document.getElementById('v3-resources');
-    r.innerHTML=D.resources.length?`<table class="v3-table"><tr><th>Nom</th><th>Description</th><th></th></tr>`+
-      D.resources.map((x,i)=>`<tr><td>${esc(x.name)}</td><td>${esc(x.desc)}</td><td><button class="v3-btn danger" onclick="v3DeleteResource(${i})">Supprimer</button></td></tr>`).join('')+'</table>':'<span class="v3-small">Aucune ressource ajoutée.</span>';
+};
+
+
+let S=
+  Object.assign(
+    {},
+    defaults,
+    load(KEY,{})
+  );
+
+
+let D=
+  Object.assign(
+    {},
+    defaultData,
+    load(DATA,{})
+  );
+
+
+const save=()=>{
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(S)
+  );
+
+  localStorage.setItem(
+    DATA,
+    JSON.stringify(D)
+  );
+
+};
+
+
+const esc=s=>
+  String(s??'')
+    .replace(
+      /[&<>"']/g,
+      m=>({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[m])
+    );
+
+
+window.v3OpenAdmin=()=>{
+
+  const panel=
+    document.getElementById(
+      'v3-admin-panel'
+    );
+
+
+  panel
+    .classList
+    .remove('v3-hidden');
+
+
+  v3Render();
+
+};
+
+
+window.v3CloseAdmin=()=>{
+
+  document
+    .getElementById(
+      'v3-admin-panel'
+    )
+    .classList
+    .add('v3-hidden');
+
+};
+
+
+function v3Render(){
+
+  const b=
+    document.getElementById(
+      'v3-admin-body'
+    );
+
+
+  b.innerHTML=`
+
+<div class="v3-admin-grid">
+
+
+<section class="v3-card">
+
+<h3>
+Identité du site
+</h3>
+
+
+<label>
+
+Nom du site
+
+<input
+  class="v3-input"
+  id="v3-title"
+  value="${esc(S.siteTitle)}">
+
+</label>
+
+<br>
+
+
+<label>
+
+Sous-titre
+
+<input
+  class="v3-input"
+  id="v3-sub"
+  value="${esc(S.subtitle)}">
+
+</label>
+
+<br>
+
+
+<label>
+
+Enseignant
+
+<input
+  class="v3-input"
+  id="v3-teacher"
+  value="${esc(S.teacher)}">
+
+</label>
+
+<br>
+
+
+<label>
+
+Établissement
+
+<input
+  class="v3-input"
+  id="v3-school"
+  value="${esc(S.school)}">
+
+</label>
+
+<br>
+
+
+<label>
+
+Couleur principale
+
+<input
+  class="v3-color"
+  type="color"
+  id="v3-color"
+  value="${esc(S.primary)}">
+
+</label>
+
+
+<div
+  class="v3-row"
+  style="margin-top:12px">
+
+<button
+  class="v3-btn primary"
+  onclick="v3SaveIdentity()">
+
+Enregistrer
+
+</button>
+
+</div>
+
+</section>
+
+
+<section class="v3-card">
+
+<h3>
+Accueil
+</h3>
+
+
+<label>
+
+Titre
+
+<input
+  class="v3-input"
+  id="v3-home-title"
+  value="${esc(S.homeTitle)}">
+
+</label>
+
+<br>
+
+
+<label>
+
+Texte d'accueil
+
+<textarea
+  class="v3-textarea"
+  id="v3-home-text">${esc(S.homeText)}</textarea>
+
+</label>
+
+
+<button
+  class="v3-btn primary"
+  onclick="v3SaveHome()">
+
+Enregistrer
+
+</button>
+
+</section>
+
+
+<section class="v3-card">
+
+<h3>
+Mode élève
+</h3>
+
+<p>
+Masque les commandes d'administration
+sur l'appareil utilisé en classe.
+</p>
+
+
+<label>
+
+<input
+  type="checkbox"
+  id="v3-student"
+  ${S.studentMode?'checked':''}>
+
+Activer le mode élève
+
+</label>
+
+
+<div
+  style="margin-top:10px">
+
+<button
+  class="v3-btn primary"
+  onclick="v3SaveStudent()">
+
+Appliquer
+
+</button>
+
+</div>
+
+</section>
+
+
+<section class="v3-card">
+
+<h3>
+Mot de passe local
+</h3>
+
+<p class="v3-small">
+
+Protection de l'interface d'administration
+sur cet appareil.
+
+Ce n'est pas une sécurité serveur.
+
+</p>
+
+
+<input
+  class="v3-input"
+  type="password"
+  id="v3-pass"
+  placeholder="Laisser vide pour désactiver">
+
+
+<div
+  style="margin-top:10px">
+
+<button
+  class="v3-btn primary"
+  onclick="v3SavePassword()">
+
+Enregistrer
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+
+<div
+  class="v3-card"
+  style="margin-top:14px">
+
+<h3>
+Cours
+</h3>
+
+
+<div class="v3-admin-grid">
+
+<input
+  class="v3-input"
+  id="c-title"
+  placeholder="Titre du cours">
+
+
+<select
+  class="v3-select"
+  id="c-subject">
+
+<option>
+Histoire
+</option>
+
+<option>
+Géographie
+</option>
+
+<option>
+EMC
+</option>
+
+</select>
+
+
+<select
+  class="v3-select"
+  id="c-level">
+
+<option>6e</option>
+<option>5e</option>
+<option>4e</option>
+<option>3e</option>
+
+</select>
+
+
+<input
+  class="v3-input"
+  id="c-url"
+  placeholder="Lien (optionnel)">
+
+</div>
+
+
+<div
+  style="margin-top:10px">
+
+<button
+  class="v3-btn primary"
+  onclick="v3AddCourse()">
+
++ Ajouter le cours
+
+</button>
+
+</div>
+
+
+<div
+  id="v3-courses"
+  style="margin-top:12px">
+</div>
+
+</div>
+
+
+<div
+  class="v3-card"
+  style="margin-top:14px">
+
+<h3>
+Ressources
+</h3>
+
+
+<div class="v3-admin-grid">
+
+<input
+  class="v3-input"
+  id="r-name"
+  placeholder="Nom de la ressource">
+
+
+<input
+  class="v3-input"
+  id="r-url"
+  placeholder="URL">
+
+
+<input
+  class="v3-input"
+  id="r-desc"
+  placeholder="Description">
+
+</div>
+
+
+<div
+  style="margin-top:10px">
+
+<button
+  class="v3-btn primary"
+  onclick="v3AddResource()">
+
++ Ajouter la ressource
+
+</button>
+
+</div>
+
+
+<div
+  id="v3-resources"
+  style="margin-top:12px">
+</div>
+
+</div>
+
+
+<div
+  class="v3-card"
+  style="margin-top:14px">
+
+<h3>
+Aperçu
+</h3>
+
+
+<div class="v3-preview">
+
+<div class="v3-kpi">
+${esc(S.siteTitle)}
+</div>
+
+<div>
+${esc(S.subtitle)}
+</div>
+
+<div class="v3-small">
+
+${esc(S.teacher)}
+${S.school?' • '+esc(S.school):''}
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+  class="v3-card"
+  style="margin-top:14px">
+
+<h3>
+Données
+</h3>
+
+
+<div class="v3-row">
+
+<button
+  class="v3-btn secondary"
+  onclick="v3Export()">
+
+Exporter
+
+</button>
+
+
+<button
+  class="v3-btn secondary"
+  onclick="document.getElementById('v3-import').click()">
+
+Importer
+
+</button>
+
+
+<input
+  id="v3-import"
+  type="file"
+  accept=".json"
+  class="v3-hidden"
+  onchange="v3Import(this)">
+
+
+<button
+  class="v3-btn danger"
+  onclick="v3Reset()">
+
+Réinitialiser V3
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+  v3RenderLists();
+
+}
+
+
+function v3RenderLists(){
+
+  const c=
+    document.getElementById(
+      'v3-courses'
+    );
+
+
+  c.innerHTML=
+    D.courses.length
+
+      ? `
+
+<table class="v3-table">
+
+<tr>
+
+<th>
+Titre
+</th>
+
+<th>
+Matière
+</th>
+
+<th>
+Niveau
+</th>
+
+<th>
+</th>
+
+</tr>
+
+${
+  D.courses.map(
+    (x,i)=>`
+
+<tr>
+
+<td>
+${esc(x.title)}
+</td>
+
+<td>
+${esc(x.subject)}
+</td>
+
+<td>
+${esc(x.level)}
+</td>
+
+<td>
+
+<button
+  class="v3-btn danger"
+  onclick="v3DeleteCourse(${i})">
+
+Supprimer
+
+</button>
+
+</td>
+
+</tr>
+
+`
+  ).join('')
+}
+
+</table>
+
+`
+
+      : `<span class="v3-small">
+           Aucun cours ajouté.
+         </span>`;
+
+
+  const r=
+    document.getElementById(
+      'v3-resources'
+    );
+
+
+  r.innerHTML=
+    D.resources.length
+
+      ? `
+
+<table class="v3-table">
+
+<tr>
+
+<th>
+Nom
+</th>
+
+<th>
+Description
+</th>
+
+<th>
+</th>
+
+</tr>
+
+${
+  D.resources.map(
+    (x,i)=>`
+
+<tr>
+
+<td>
+${esc(x.name)}
+</td>
+
+<td>
+${esc(x.desc)}
+</td>
+
+<td>
+
+<button
+  class="v3-btn danger"
+  onclick="v3DeleteResource(${i})">
+
+Supprimer
+
+</button>
+
+</td>
+
+</tr>
+
+`
+  ).join('')
+}
+
+</table>
+
+`
+
+      : `<span class="v3-small">
+           Aucune ressource ajoutée.
+         </span>`;
+
+}
+
+
+window.v3SaveIdentity=()=>{
+
+  S.siteTitle=
+    document
+      .getElementById('v3-title')
+      .value
+      .trim()
+    ||defaults.siteTitle;
+
+
+  S.subtitle=
+    document
+      .getElementById('v3-sub')
+      .value
+      .trim()
+    ||defaults.subtitle;
+
+
+  S.teacher=
+    document
+      .getElementById('v3-teacher')
+      .value
+      .trim();
+
+
+  S.school=
+    document
+      .getElementById('v3-school')
+      .value
+      .trim();
+
+
+  S.primary=
+    document
+      .getElementById('v3-color')
+      .value;
+
+
+  save();
+
+  v3Apply();
+
+  v3Render();
+
+};
+
+
+window.v3SaveHome=()=>{
+
+  S.homeTitle=
+    document
+      .getElementById('v3-home-title')
+      .value
+      .trim()
+    ||S.siteTitle;
+
+
+  S.homeText=
+    document
+      .getElementById('v3-home-text')
+      .value
+      .trim();
+
+
+  save();
+
+  v3Apply();
+
+  v3Render();
+
+};
+
+
+window.v3SaveStudent=()=>{
+
+  S.studentMode=
+    document
+      .getElementById(
+        'v3-student'
+      )
+      .checked;
+
+
+  save();
+
+  v3Apply();
+
+  v3Render();
+
+};
+
+
+window.v3SavePassword=()=>{
+
+  S.adminPassword=
+    document
+      .getElementById(
+        'v3-pass'
+      )
+      .value;
+
+
+  save();
+
+  alert(
+    'Mot de passe local enregistré.'
+  );
+
+};
+
+
+window.v3AddCourse=()=>{
+
+  const title=
+    document
+      .getElementById('c-title')
+      .value
+      .trim();
+
+
+  if(!title){
+
+    alert(
+      'Indique un titre.'
+    );
+
+    return;
+
   }
 
-  window.v3SaveIdentity=()=>{
-    S.siteTitle=document.getElementById('v3-title').value.trim()||defaults.siteTitle;
-    S.subtitle=document.getElementById('v3-sub').value.trim()||defaults.subtitle;
-    S.teacher=document.getElementById('v3-teacher').value.trim();
-    S.school=document.getElementById('v3-school').value.trim();
-    S.primary=document.getElementById('v3-color').value; save(); v3Apply(); v3Render();
-  };
-  window.v3SaveHome=()=>{
-    S.homeTitle=document.getElementById('v3-home-title').value.trim()||S.siteTitle;
-    S.homeText=document.getElementById('v3-home-text').value.trim(); save(); v3Apply(); v3Render();
-  };
-  window.v3SaveStudent=()=>{S.studentMode=document.getElementById('v3-student').checked;save();v3Apply();v3Render()};
-  window.v3SavePassword=()=>{S.adminPassword=document.getElementById('v3-pass').value;save();alert('Mot de passe local enregistré.')};
-  window.v3AddCourse=()=>{
-    const title=document.getElementById('c-title').value.trim(); if(!title)return alert('Indique un titre.');
-    D.courses.push({title,subject:document.getElementById('c-subject').value,level:document.getElementById('c-level').value,url:document.getElementById('c-url').value.trim()});save();v3Render();
-  };
-  window.v3DeleteCourse=i=>{D.courses.splice(i,1);save();v3Render()};
-  window.v3AddResource=()=>{
-    const name=document.getElementById('r-name').value.trim(); if(!name)return alert('Indique un nom.');
-    D.resources.push({name,url:document.getElementById('r-url').value.trim(),desc:document.getElementById('r-desc').value.trim()});save();v3Render();
-  };
-  window.v3DeleteResource=i=>{D.resources.splice(i,1);save();v3Render()};
-  window.v3Export=()=>{
-    const blob=new Blob([JSON.stringify({settings:S,data:D},null,2)],{type:'application/json'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tableau-hg-v3-sauvegarde.json';a.click();URL.revokeObjectURL(a.href);
-  };
-  window.v3Import=input=>{
-    const f=input.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const x=JSON.parse(rd.result);S=Object.assign({},defaults,x.settings||{});D=Object.assign({},defaultData,x.data||{});save();v3Apply();v3Render();alert('Import terminé.')}catch(e){alert('Fichier JSON invalide.')}};rd.readAsText(f);
-  };
-  window.v3Reset=()=>{if(!confirm('Réinitialiser toutes les données V3 sur cet appareil ?'))return;localStorage.removeItem(KEY);localStorage.removeItem(DATA);S=Object.assign({},defaults);D=Object.assign({},defaultData);v3Apply();v3Render()};
 
-  function v3Apply(){
-    document.documentElement.style.setProperty('--primary',S.primary);
-    const candidates=[
-      ['#siteTitle',S.siteTitle],['#brandTitle',S.siteTitle],['#heroTitle',S.homeTitle],
-      ['#siteSubtitle',S.subtitle],['#subtitle',S.subtitle]
-    ];
-    candidates.forEach(([sel,val])=>{const el=document.querySelector(sel);if(el&&val)el.textContent=val});
-    document.title=S.siteTitle;
-    // Hide visible admin controls in student mode.
-    document.querySelectorAll('[data-show="admin"],#adminBtn,.admin-only,.v3-admin-trigger').forEach(el=>el.style.display=S.studentMode?'none':'');
+  D.courses.push({
+
+    title,
+
+    subject:
+      document
+        .getElementById('c-subject')
+        .value,
+
+    level:
+      document
+        .getElementById('c-level')
+        .value,
+
+    url:
+      document
+        .getElementById('c-url')
+        .value
+        .trim()
+
+  });
+
+
+  save();
+
+  v3Render();
+
+};
+
+
+window.v3DeleteCourse=i=>{
+
+  D.courses.splice(i,1);
+
+  save();
+
+  v3Render();
+
+};
+
+
+window.v3AddResource=()=>{
+
+  const name=
+    document
+      .getElementById('r-name')
+      .value
+      .trim();
+
+
+  if(!name){
+
+    alert(
+      'Indique un nom.'
+    );
+
+    return;
+
   }
 
-  // Add a clear V3 administration button without depending on the original markup.
-  function addTrigger(){
-    if(document.getElementById('v3-admin-trigger'))return;
-    const header=document.querySelector('header, nav, .topbar, .navbar')||document.body;
-    const btn=document.createElement('button');btn.id='v3-admin-trigger';btn.className='v3-btn primary v3-admin-trigger';btn.textContent='⚙ Administration V3';btn.onclick=()=>{
-      if(S.adminPassword){
-        const p=prompt('Mot de passe administrateur'); if(p!==S.adminPassword)return alert('Mot de passe incorrect.');
+
+  D.resources.push({
+
+    name,
+
+    url:
+      document
+        .getElementById('r-url')
+        .value
+        .trim(),
+
+    desc:
+      document
+        .getElementById('r-desc')
+        .value
+        .trim()
+
+  });
+
+
+  save();
+
+  v3Render();
+
+};
+
+
+window.v3DeleteResource=i=>{
+
+  D.resources.splice(i,1);
+
+  save();
+
+  v3Render();
+
+};
+
+
+window.v3Export=()=>{
+
+  const blob=
+    new Blob(
+      [
+        JSON.stringify(
+          {
+            settings:S,
+            data:D
+          },
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          'application/json'
       }
-      v3OpenAdmin();
-    };
-    header.appendChild(btn);
-  }
+    );
 
-  window.addEventListener('DOMContentLoaded',()=>{v3Apply();addTrigger();});
+
+  const a=
+    document.createElement(
+      'a'
+    );
+
+
+  a.href=
+    URL.createObjectURL(
+      blob
+    );
+
+
+  a.download=
+    'tableau-hg-v4-sauvegarde.json';
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(
+    a.href
+  );
+
+};
+
+
+window.v3Import=input=>{
+
+  const f=
+    input.files[0];
+
+
+  if(!f)return;
+
+
+  const rd=
+    new FileReader();
+
+
+  rd.onload=()=>{
+
+    try{
+
+      const x=
+        JSON.parse(
+          rd.result
+        );
+
+
+      S=
+        Object.assign(
+          {},
+          defaults,
+          x.settings||{}
+        );
+
+
+      D=
+        Object.assign(
+          {},
+          defaultData,
+          x.data||{}
+        );
+
+
+      save();
+
+      v3Apply();
+
+      v3Render();
+
+
+      alert(
+        'Import terminé.'
+      );
+
+    }catch(e){
+
+      alert(
+        'Fichier JSON invalide.'
+      );
+
+    }
+
+  };
+
+
+  rd.readAsText(f);
+
+};
+
+
+window.v3Reset=()=>{
+
+  if(
+    !confirm(
+      'Réinitialiser toutes les données V3 sur cet appareil ?'
+    )
+  )return;
+
+
+  localStorage.removeItem(
+    KEY
+  );
+
+
+  localStorage.removeItem(
+    DATA
+  );
+
+
+  S=
+    Object.assign(
+      {},
+      defaults
+    );
+
+
+  D=
+    Object.assign(
+      {},
+      defaultData
+    );
+
+
+  v3Apply();
+
+  v3Render();
+
+};
+
+
+function v3Apply(){
+
+  document
+    .documentElement
+    .style
+    .setProperty(
+      '--primary',
+      S.primary
+    );
+
+
+  document.title=
+    S.siteTitle;
+
+
+  document
+    .querySelectorAll(
+      '[data-show="admin"],#adminBtn,.admin-only,.v3-admin-trigger'
+    )
+    .forEach(
+      el=>{
+        el.style.display=
+          S.studentMode
+            ? 'none'
+            : ''
+      }
+    );
+
+}
+
+
+function addTrigger(){
+
+  if(
+    document.getElementById(
+      'v3-admin-trigger'
+    )
+  )return;
+
+
+  const header=
+    document.querySelector(
+      'header'
+    );
+
+
+  const btn=
+    document.createElement(
+      'button'
+    );
+
+
+  btn.id=
+    'v3-admin-trigger';
+
+
+  btn.className=
+    'v3-btn primary v3-admin-trigger';
+
+
+  btn.textContent=
+    '⚙ Administration V4';
+
+
+  btn.onclick=()=>{
+
+    if(S.adminPassword){
+
+      const p=
+        prompt(
+          'Mot de passe administrateur'
+        );
+
+
+      if(
+        p!==S.adminPassword
+      ){
+
+        return alert(
+          'Mot de passe incorrect.'
+        );
+
+      }
+
+    }
+
+
+    v3OpenAdmin();
+
+  };
+
+
+  header.appendChild(
+    btn
+  );
+
+}
+
+
+window.addEventListener(
+  'DOMContentLoaded',
+  ()=>{
+
+    v3Apply();
+
+    addTrigger();
+
+  }
+);
+
 })();
+
 </script>
+
 
 </body>
 </html>
